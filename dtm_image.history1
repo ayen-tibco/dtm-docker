@@ -1,0 +1,186 @@
+    1  pwd
+    2  ls /usr/sbin
+    3  ipfoncif
+    4  ifconfig
+    5  wget
+    6  curl
+    7  maven
+    8  cat /etc/redhat-release 
+    9  yum install maven
+   10  yum install apache-maven
+   11  rpm -Uvh jdk-7u45-linux-x64.rpm
+   12  java -version
+   13  alternatives --list java
+   14  alternatives --list
+   15  alternatives --list java
+   16  yum install wget
+   17  cd /opt
+   18  wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.tar.gz"
+   19  tar xzf jdk-8u60-linux-x64.tar.gz
+   20  yum install tar
+   21  tar xzf jdk-8u60-linux-x64.tar.gz
+   22  cd cd /opt/jdk1.8.0_60/
+   23  cd /opt/jdk1.8.0_60/
+   24  alternatives --install /usr/bin/java java /opt/jdk1.8.0_60/bin/java 1
+   25  alternatives --config java
+   26  alternatives --install /usr/bin/jar jar /opt/jdk1.8.0_60/bin/jar
+   27  alternatives --install /usr/bin/jar jar /opt/jdk1.8.0_60/bin/jar 1
+   28  alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_60/bin/javac 1
+   29  alternatives --set jar /opt/jdk1.8.0_60/bin/jar
+   30  alternatives --set javac /opt/jdk1.8.0_60/bin/javac
+   31  java version
+   32  java -version
+   33  export JAVA_HOME=/opt/jdk1.8.0_60
+   34  export JRE_HOME=/opt/jdk1.8.0_60/jre
+   35  export PATH=$PATH:/opt/jdk1.8.0_60/bin:/opt/jdk1.8.0_60/jre/bin
+   36  pwd
+   37  cd ~
+   38  history | cut -c 8- > dtm_image.history
+   39  more dtm_image.history 
+   40  exit
+   41  java -version
+   42  pwd
+   43  cd ~
+   44  pwd
+   45  wget http://download.nextag.com/apache/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
+   46  ls -al /opt
+   47  tar -xzvf ./apache-maven-3.3.3-bin.tar.gz -C /opt
+   48  cd /opt
+   49  ls -al
+   50  ls -al /usr/java/latest
+   51  ls -al /usr/bin/java
+   52  nano /etc/profile.d/dtm.sh
+   53  vi /etc/profile.d/dtm.sh
+   54  #!/bin/bash
+   55  export JAVA_HOME=/usr/java/latest
+   56  export MAVEN_HOME=/opt/maven
+   57  export M2_HOME=$MAVEN_HOME
+   58  ls -s apache-maven-3.3.3 /opt/maven
+   59  ln -s apache-maven-3.3.3 /opt/maven
+   60  ls -al maven/
+   61  export PATH=$PATH:$MAVEN_HOME/bin
+   62  export JAVA_HOME=/usr/bin/java
+   63  mvn --version
+   64  echo $JAVA_HOME
+   65  ls -al /usr/bin/java
+   66  more /etc/alternatives/java
+   67  ls -al /etc/alternatives/java
+   68  export JAVA_HOME=/opt/jdk1.8.0_60
+   69  vi /etc/profile.d/dtm.sh
+   70  mvn --version
+   71  cd ~/
+   72  mkdir workspace
+   73  cd workspace
+   74  export SW_HOME=$(pwd)
+   75  export PATH=${SW_HOME}/distrib/kabira/bin:${PATH}
+   76  mkdir dtm-sb-helloworld
+   77  cd dtm-sb-helloworld/
+   78  vi pom.xml
+   79  git
+   80  yum install git
+   81  git clone http://git.tibco.com/git/product/ep/eppoc.git
+   82  git clone https://git.tibco.com/git/product/ep/eppoc.git
+   83  git clone https://ayen@git.tibco.com/git/product/ep/eppoc.git
+   84  git clone https://ayen@git.tibco.com/git/product/ep/eppoc.git
+   85  git clone http://ayen@git.tibco.com/git/product/ep/eppoc.git
+   86  wget http://ldm-sb.s3.amazonaws.com/sample_operator.zip
+   87  ls
+   88  unzip sample_operator.zip 
+   89  zip
+   90  rm sample_operator.zip 
+   91  wget http://ldm-sb.s3.amazonaws.com/sample_operator.tar
+   92  tar -xvf sample_operator.tar 
+   93  mkdir /opt/tibco/cfgmgt
+   94  mkdir -p /opt/tibco/cfgmgt
+   95  cd ..
+   96  mv dtm-sb-helloworld /opt/tibco/cfgmgt/
+   97  cd ..
+   98  rmdir workspace/
+   99  cd /opt/tibco/
+  100  cd ~
+  101  ls
+  102  wget https://ldm-sb.s3.amazonaws.com/TIB_sb-cep_7.5.3_runtime_gridlib_linux64-pi
+  103  wget https://ldm-sb.s3.amazonaws.com/TIB_sb-cep_7.5.3_runtime_gridlib_linux64.tar.gz
+  104  cd /
+  105  cd ~
+  106  tar tzvf TIB_sb-cep_7.5.3_runtime_gridlib_linux64.tar.gz 
+  107  tar -xzvf ./TIB_sb-cep_7.5.3_runtime_gridlib_linux64.tar.gz -C /
+  108  cd /opt/tibco/
+  109  mkdir dtm
+  110  export SW_HOME=$(pwd)
+  111  echo $PATH
+  112  export PATH=${SW_HOME}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/maven/bin
+  113  echo $PATH
+  114  export PATH=${SW_HOME}/distrib/kabira/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/maven/bin
+  115  echo $PATH
+  116  ls -al
+  117  cd dtm
+  118  ls
+  119  export SW_HOME=$(pwd)
+  120  echo $SW_HOME
+  121  export PATH=${SW_HOME}/distrib/kabira/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/maven/bin
+  122  echo $PATH
+  123  cd ..
+  124  cd ..
+  125  cd tibco/
+  126  cd cfgmgt/
+  127  ls
+  128  cd dtm-sb-helloworld/
+  129  ls
+  130  cd eppoc/
+  131  ls
+  132  cd dtmhelloworld/
+  133  ls
+  134  nano pom.xml 
+  135  vi pom.xml
+  136  ls /opt/tibco/cfgmgt/
+  137  ls /opt/tibco/cfgmgt/dtm-sb-helloworld/
+  138  ls =al /opt/tibco/cfgmgt/dtm-sb-helloworld/
+  139  ls -al /opt/tibco/cfgmgt/dtm-sb-helloworld/
+  140  ls -al /opt/tibco/cfgmgt/dtm-sb-helloworld/sample_operator
+  141  vi pom.xml 
+  142  vi pom.xml 
+  143  ls -al
+  144  pwd
+  145  cd ..
+  146  cd ..
+  147  ls
+  148  ls -al
+  149  export STREAMBASE_HOME=/opt/tibco/sb-cep/7.5
+  150  echo $STREAMBASE_HOME
+  151  ls
+  152  cd eppoc/
+  153  ls
+  154  cd dtmhelloworld/
+  155  ls
+  156  more pom.xml 
+  157  mvn install
+  158  more pom.xml 
+  159  mvn install
+  160  vi pom.xml 
+  161  mvn -e install
+  162  nano ~/.m2/settings.xml
+  163  vi ~/.m2/settings.xml
+  164  mvn install
+  165  ls $SW_HOME
+  166  ls $STREAMBASE_HOME
+  167  cd /opt/tibco/dtm/distrib/kabira/
+  168  cd bin
+  169  ls
+  170  ./administrator install node nodename=dtm1 deploydirectories=${STREAMBASE_HOME}/lib
+  171  administrator servicename=dtm1 start node
+  172  hostname
+  173  administrator servicename=141b102bffd6 start node
+  174  administrator servicename=dtm1 start node
+  175  ps -ef
+  176  $SW_HOME/distrib/kabira/bin/administrator display services
+  177  $SW_HOME/distrib/kabira/bin/administrator display services
+  178  ps -ef
+  179  administrator servicename=dtm1 start node
+  180  administrator servicename=dtm1 stop node
+  181  ls -al
+  182  hostname
+  183  cd ~
+  184  ks
+  185  ls
+  186  history > dtm_image.history1

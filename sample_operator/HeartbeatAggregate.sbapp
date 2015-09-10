@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <stream name="InputTics">
+            <schema>
+                <field name="symbol" type="string"/>
+                <field name="price" type="double"/>
+            </schema>
+            <param name="gui:x" value="139"/>
+            <param name="gui:y" value="13"/>
+        </stream>
+        <box name="Timestamp" type="map">
+            <input port="1" stream="InputTics"/>
+            <output port="1" stream="out:Timestamp_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="time">now()</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="216"/>
+            <param name="gui:y" value="13"/>
+        </box>
+        <box name="EverySecond" type="heartbeat">
+            <input port="1" stream="out:Timestamp_1"/>
+            <output port="1" stream="out:EverySecond_1"/>
+            <param name="interval" value="1"/>
+            <param name="slack" value="0.01"/>
+            <param name="timestamp-field" value="time"/>
+            <param name="gui:x" value="305"/>
+            <param name="gui:y" value="13"/>
+        </box>
+        <box name="CountTics" type="aggregate">
+            <input port="1" stream="out:EverySecond_1"/>
+            <output port="1" stream="TicCounts"/>
+            <param name="dimension-name.0" value="time"/>
+            <param name="dimension-type.0" value="value"/>
+            <param name="dimension-value.0" value="time"/>
+            <param name="dimension-offset.0" value="0"/>
+            <param name="dimension-advance.0" value="5"/>
+            <param name="dimension-partial.0" value="yes"/>
+            <param name="dimension-size.0" value="5"/>
+            <param name="dimension-emit-close-first.0" value="false"/>
+            <param name="output-group-by" value="true"/>
+            <target-list>
+                <expressions>
+                    <include field="count">count(symbol)</include>
+                    <include field="time">lastval(time)</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="395"/>
+            <param name="gui:y" value="13"/>
+        </box>
+        <output-stream name="TicCounts">
+            <param name="gui:x" value="475"/>
+            <param name="gui:y" value="13"/>
+        </output-stream>
+    </add>
+</modify>

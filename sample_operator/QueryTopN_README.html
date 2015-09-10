@@ -1,0 +1,587 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>
+      Query TopN Sample
+    </title>
+    <link rel="stylesheet" type="text/css" href="''">
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+    <style type="text/css">
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    sb-readme.css : Styles for StreamBase Help READMEs
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    body {
+    background: #fff;
+    text-align: left;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    padding: 10px;  
+    margin: 0;
+    }
+
+    h1 {
+    color: black;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 0.75em 0px;
+    }
+
+    h2 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 130%;
+    font-weight: bold;
+    border-top: 0.5px solid gray; 
+    }
+
+    h3 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 120%;
+    font-style: italic;
+    font-weight: bold;
+    width: 50%;
+    border-top: 1px dashed;
+    }
+
+    h3.subtitle {
+    color: black;
+    text-align: center;
+    border: none;
+    margin: -1.25em 0 1em 0;
+    padding: none;
+    font-size: 120%;
+    font-weight: bold;
+    font-style: normal;
+    width: 100%;
+    }
+
+    h4 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 110%;
+    font-weight: bold;
+    }
+
+    h5 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-style: italic;
+    }
+
+    h6 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-weight: bold;
+    }
+
+    table {
+    border-collapse: collapse;
+    border-left: 1px solid gray;
+    border-top: 1px solid gray;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    }
+
+    table.simplelist {
+    border: none;
+    }
+
+    thead {
+    line-height: 1em;
+    }
+
+    th {
+    background: #ddeeff;
+    text-align: left;
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    td {
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    table p {
+    margin-bottom: 2px;
+    margin-top: 3px;
+    }
+
+    ul, ol {
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+    margin-left: 1.5em;
+    padding: 0 0 0 20px;
+    }
+
+    li {
+    margin-top: 0;
+    margin-bottom: 0;    
+    }
+
+    ol[compact] li p, ul[compact] li p {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+    }
+
+    li p {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    }
+
+    div.variablelist {
+    margin-left: 2em;
+    }
+
+    dt {
+    font-size: 95%;
+    font-weight: bold;
+    margin-top: 8.0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    dd {
+    margin-left: 1em;
+    }
+
+    div.column dt {
+    font-size: 95%;
+    font-weight: normal;
+    margin-top: 0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    img {
+    border: none;
+    }
+
+    blockquote {
+    margin: 0 0 0 2em;
+    padding: 5px 0;
+    }
+
+    span {
+    margin: 0;
+    padding: 0;
+    }
+
+    a {
+    margin: 0;
+    padding: 0;
+    }
+
+    a:link, a:visited {
+    color: #003399;
+    }
+
+    a:hover {
+    color: #ff0000;
+    }
+
+    span.guilabel, 
+    span.guimenuitem, 
+    span.guibutton {
+    font-weight: bold;
+    color: #333333;
+    }
+
+    .column { 
+    padding: 2px; 
+    }
+
+    *.box {
+    border: 1px solid blue;
+    margin: 10px;
+    background: #def;
+    }
+
+    *.box *.title{
+    margin-top: 0;
+    }
+
+    *.box * {
+    margin-left: 1em;
+    }
+
+    div.back2top {
+    margin-top: 30px;
+    }
+
+    div.literallayout p {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    div.note *.title,
+    div.important *.title,
+    div.caution *.title,
+    div.tip *.title,
+    div.warning *.title {
+    margin: 0em 0em -0.85em 0em;
+    font-size: 90%;
+    }
+
+    li div.note *.title, 
+    li div.important *.title, 
+    li div.caution *.title, 
+    li div.tip *.title, 
+    li div.warning *.title {
+    margin: 0em 0em -0.2em 0em;
+    font-size: 90%;
+    }
+
+    table div.note *.title,
+    table div.important *.title,
+    table div.caution *.title,
+    table div.tip *.title,
+    table div.warning *.title {
+    margin: 0em 0em -0.5em 0em;
+    font-size: 90%;
+    }
+
+    pre.programlisting {
+    border: 1.0px solid gray;
+    padding: 2px;
+    background: #EEE;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    pre.programlisting em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    pre.screen {
+    border: 1px solid gray;
+    padding: 2px;
+    background: #FBFFFF;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attribute, code.sgmltag-element, code.sgml-emptytag, code.function, 
+    code.type, code.exceptionname, code.parameter, code.varname, code.interfacename, 
+    code.oointerface, code.classname, code.ooclass, code.methodname, code.coexception,
+    code.command, code.option, code.filename, code.literal, code.uri, code.constant,
+    code.methodsynopsis, pre.classsynopsis, span.type, span.markup 
+    {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attvalue, 
+    code.filename em.replaceable, 
+    code.literal  em.replaceable, 
+    code.filename em.replaceable code,
+    code.literal  em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    em.replaceable {
+    font-style: italic;
+    }
+
+    code.sgmltag-element:before {
+    content:'<';
+    }
+
+    code.sgmltag-element:after {
+    content:'>';
+    } 
+
+    h2 code.sgmltag-element, h3 code.sgmltag-element, h4 code.sgmltag-element {
+    font-family: inherit; 
+    }
+
+    strong.command, strong.keycap {
+    color: #333333;
+    }
+
+    strong.userinput {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #e0e0e0;
+    }
+
+    p.nospaceabove {
+    margin-top: -1.0em;
+    }
+
+    div#header {
+    margin: 0;
+    padding-bottom: 0;
+    text-align: left;
+    font-size : 90%;
+    }
+
+    p#readmebanner {
+    font-size: 100%;
+    font-weight: bold;
+    text-align: center;
+    color: navy;
+    border-bottom: 1px solid #333;
+    }
+
+    div.toc dt {
+    font-weight: normal;
+    line-height: 1em;
+    margin-top: 0;
+    margin-bottom: 0.35em;
+    }
+
+    div.article>div.section, div.preface>div.section {
+    padding: 0 10px 0 10px;
+    }
+
+    div#footer {
+    padding-left: 0;
+    border-top: 1px solid #333;
+    font-size: 90%;
+    margin-top: 18pt;
+    }
+
+    div#footer p {
+    margin-top: 0;
+    }
+
+    </style>
+  </head>
+  <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+    <a name="_top"></a>
+    <div id="header">
+    </div>
+
+    <div id="subPageMasthead">
+      <p id="readmebanner">
+        StreamBase Documentation
+      </p>
+    </div>
+
+    <div class="article">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title">
+              <a name="QueryTopN" id="QueryTopN"></a>Query TopN Sample
+            </h1>
+          </div>
+        </div>
+      </div>
+      <a class="ix" name="Query TopN sample"></a><a class="ix" name="samples, Query TopN"></a>
+      <p>
+        This topic describes how to run the <span class="application">Query TopN</span> sample
+        application. For detailed information about this and other samples, see the <em class=
+        "citetitle">Samples Guide</em> in the <span>StreamBase Studio</span> Help.
+      </p>
+
+      <p>
+        Suppose you want to extract a range of values from a query table, such as the ten highest
+        or lowest stocks or best- or worst-selling items in an inventory. One method is to use a
+        Query operator to repeatedly read all the rows in the table, and then use a series of other
+        operators to process the result, compare prices across stock symbols or products to find
+        the top <em class="replaceable"><code>n</code></em>. Conversely, you could pre-process
+        tuples upstream from a query table that has just one row containing <em class=
+        "replaceable"><code>n</code></em> fields. Each time a tuple arrives on the input stream,
+        compare values to see if the table needs to be updated.
+      </p>
+
+      <p>
+        Both of these options require complicated processing to compare the values and continually
+        calculate the top n values. The <span class="application">QueryTopN</span> sample
+        application demonstrates a simpler method, using the Query operator's built-in option to
+        limit the number of output rows and b-tree indexing.
+      </p>
+
+      <p>
+        The sample has one input stream, in which you enter the value of <em class=
+        "replaceable"><code>n</code></em> as the int field howMany. The table is populated from a
+        CSV data file containing randomly generated values, but in a real application data from an
+        input stream or another module would be updating the table dynamically.
+      </p>
+
+      <p>
+        The table is indexed by field value in descending order, so that the first <em class=
+        "replaceable"><code>n</code></em> values of the index are always the largest ones. Sending
+        a tuple from the enterN input stream triggers a read operation that outputs just the
+        current top <em class="replaceable"><code>n</code></em> highest values by setting the
+        <span class="guilabel">Limit</span> field in the Query operator to the input value howMany.
+      </p>
+
+      <p>
+        The tuples output from the table are split into two streams and processed by an Aggregate
+        operator and a Map operator, respectively. The aggregate operator uses <code class=
+        "function">aggregatelist(tuple(...))</code> in a predicate dimension to generate a list of
+        the top <em class="replaceable"><code>n</code></em> tuples. The dimension just has a Close
+        expression, <code class="literal">count()=howMany</code>, to do this. The Map operator
+        restores the original field names and drops input field howMany to output <em class=
+        "replaceable"><code>n</code></em> individual tuples on the lower stream.
+      </p>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e15795" id="d0e15795"></a>Running QueryTopN.sbapp in <span>StreamBase
+                Studio</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1" compact>
+            <li class="listitem">
+              <p>
+                In Package Explorer, load the sample_operator project if it is not present and
+                expand it. Find and double-click the <code class="filename">QueryTopN.sbapp</code>
+                application to open it. Make sure the application is the currently active tab in
+                the EventFlow Editor. Notes on the canvas explain how the application works.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click the <span class="guilabel">Run</span> button. This opens the SB Test/Debug
+                perspective and starts the application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Application Output view, make sure that <code class="literal">All
+                streams</code> is selected in the <span class="guilabel">Output stream</span>
+                control.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter 1 for howMany (the number of values you want to output) in in the Manual
+                Input view and click <span class="guibutton">Send Data</span>.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Observe the output streams in the Application Output view. Note that:
+              </p>
+
+              <div class="orderedlist">
+                <ol class="orderedlist" type="a">
+                  <li class="listitem">
+                    <p>
+                      The topNtuples stream contains one tuple having fields value and symbol. It
+                      is the highest value in the table.
+                    </p>
+                  </li>
+
+                  <li class="listitem">
+                    <p>
+                      The topNlist stream contains one tuple, a list containing the above tuple.
+                    </p>
+                  </li>
+                </ol>
+              </div>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Repeat steps 4 and 5, increasing howMany to 2, 3, ..., to see the set of top
+                <em class="replaceable"><code>n</code></em> values grow.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                When done, press <span class="keycap"><strong>F9</strong></span> or click the
+                <span class="guilabel">Stop Running Application</span> button.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e15853" id="d0e15853"></a>Sample Location
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          When you load the sample into StreamBase Studio, Studio copies the sample's files to a
+          project folder in your Studio workspace directory. Because the Studio workspace location
+          is normally part of your home directory, you have full access rights there by default.
+        </p>
+
+        <div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <h3 class="title">
+            Important
+          </h3>
+
+          <p>
+            Load this sample in StreamBase Studio, and thereafter use the Studio workspace copy of
+            the sample to run and test it, even when running from the command prompt.
+          </p>
+        </div>
+
+        <p>
+          Using the workspace copy of the sample avoids the permission problems that can occur when
+          trying to work with the initially installed location of the sample. The default workspace
+          location for this sample is:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>studio-workspace</code></em>/sample_operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the <span><span>location</span></span> of <em class=
+          "replaceable"><code>studio-workspace</code></em> on your system.
+        </p>
+
+        <p>
+          In the default TIBCO StreamBase installation, this sample's files are initially installed
+          in:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>streambase-install-dir</code></em>/sample/operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the location of <em class=
+          "replaceable"><code>streambase-install-dir</code></em> on your system. This location may
+          require administrator privileges for write access, depending on your platform.
+        </p>
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>
+        Copyright © 2004-2015 TIBCO Software Inc. All rights reserved.
+      </p>
+    </div>
+  </body>
+</html>

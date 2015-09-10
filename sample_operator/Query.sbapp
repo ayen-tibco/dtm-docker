@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <gui.metadata>
+            <property name="app-version" value="1.0.baseline"/>
+            <property name="description" value="This application demonstrates loading a Query Table with data and reading data back out using Query operators."/>
+        </gui.metadata>
+        <named-schemas>
+            <schema name="Nasdaq100InSchema">
+                <field name="Name" type="string"/>
+                <field name="Symbol" type="string"/>
+                <field name="Price" type="double"/>
+                <field name="Color" type="string"/>
+                <field name="Description" type="string"/>
+            </schema>
+        </named-schemas>
+        <table-schemas>
+            <table-schema name="Nasdaq100TableSchema" schema="Nasdaq100InSchema">
+                <primary-index type="btree">
+                    <field name="Symbol"/>
+                </primary-index>
+                <index type="btree">
+                    <field name="Price"/>
+                    <field name="Color"/>
+                </index>
+            </table-schema>
+        </table-schemas>
+        <data name="Nasdaq100Table" shared="false" source="concrete" type="querytable">
+            <param name="storage-method" value="memory"/>
+            <param name="replicated" value="false"/>
+            <param name="table-schema" value="Nasdaq100TableSchema"/>
+            <param name="truncate" value="false"/>
+            <preload format="csv" mode="empty"/>
+            <param name="gui:x" value="-23"/>
+            <param name="gui:y" value="298"/>
+            <param name="gui:width" value="170"/>
+            <param name="gui:height" value="63"/>
+        </data>
+        <stream name="DeleteSymbolStream">
+            <schema>
+                <field name="Symbol" type="string"/>
+            </schema>
+            <param name="gui:x" value="-269"/>
+            <param name="gui:y" value="575"/>
+        </stream>
+        <stream name="PriceColorStream">
+            <schema>
+                <field name="MaxPrice" type="double"/>
+                <field name="Color" type="string"/>
+            </schema>
+            <param name="gui:x" value="-269"/>
+            <param name="gui:y" value="198"/>
+        </stream>
+        <stream name="PriceStream">
+            <schema>
+                <field name="MaxPrice" type="double"/>
+                <field name="MinPrice" type="double"/>
+            </schema>
+            <param name="gui:x" value="-269"/>
+            <param name="gui:y" value="372"/>
+        </stream>
+        <stream name="SymbolStream">
+            <schema>
+                <field name="Symbol" type="string"/>
+            </schema>
+            <param name="gui:x" value="-269"/>
+            <param name="gui:y" value="96"/>
+        </stream>
+        <stream name="UpdatePriceStream">
+            <schema>
+                <field name="Symbol" type="string"/>
+                <field name="Price" type="double"/>
+            </schema>
+            <param name="gui:x" value="-271"/>
+            <param name="gui:y" value="475"/>
+        </stream>
+        <box name="TableLoader" type="inputadapter">
+            <output port="1" stream="out:TableLoader_1"/>
+            <param name="start:state" value="true"/>
+            <param name="javaclass" value="com.streambase.sb.adapter.csvreader.CSVReader"/>
+            <param name="CaptureStrategy" value="FLATTEN"/>
+            <param name="Delimiter" value=","/>
+            <param name="EmitTiming" value="Periodic"/>
+            <param name="FileName" value="NASDAQ100.csv"/>
+            <param name="HeaderTypeOption" value="No header"/>
+            <param name="MapControlPort" value="false"/>
+            <param name="NullString" value="null"/>
+            <param name="Period" value="0"/>
+            <param name="QuoteChar" value="&quot;"/>
+            <param name="Repeat" value="1"/>
+            <param name="Schema" value="Nasdaq100InSchema"/>
+            <param name="StartControlPort" value="false"/>
+            <param name="StartEventPort" value="false"/>
+            <param name="TimeBasedEmitMode" value="Emission times relative to the first record"/>
+            <param name="TimestampFormat" value="yyyy-MM-dd hh:mm:ss.SSSZ"/>
+            <param name="ignoreExistingRecords" value="true"/>
+            <param name="logLevel" value="INFO"/>
+            <param name="tailMode" value="false"/>
+            <param name="tailUpdateInterval" value="1000"/>
+            <param name="gui:x" value="-269"/>
+            <param name="gui:y" value="-16"/>
+        </box>
+        <box name="DeleteSymbolQuery" type="query">
+            <input port="1" stream="DeleteSymbolStream"/>
+            <output port="1" stream="DeleteSymbolOutput"/>
+            <dataref id="querytable" name="Nasdaq100Table"/>
+            <param name="operation" value="delete"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="Symbol"/>
+            <param name="key-lowerbound-value.0" value="input.Symbol"/>
+            <param name="key-lowerbound-operation.0" value="eq"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-null"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <item name="old" selection="all"/>
+                <item name="new" selection="none"/>
+                <item name="current" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list goal-schema="Nasdaq100InSchema" name="no-match">
+                <item name="input" selection="none"/>
+            </target-list>
+            <param name="gui:x" value="56"/>
+            <param name="gui:y" value="575"/>
+        </box>
+        <box name="LoadNasdaq100Table" type="query">
+            <input port="1" stream="out:TableLoader_1"/>
+            <output port="1" stream="Nasdaq100Output"/>
+            <dataref id="querytable" name="Nasdaq100Table"/>
+            <param name="operation" value="write"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="Symbol"/>
+            <param name="key-value.0" value="Symbol"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="update"/>
+            <param name="no-match-mode" value="output-no-match-nothing"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="none">
+                    <include field="Symbol"/>
+                    <include field="Name"/>
+                </item>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+                <item name="current" selection="none"/>
+            </target-list>
+            <target-list goal-schema="Nasdaq100InSchema_logical_value" name="insert">
+                <item name="input" selection="all"/>
+            </target-list>
+            <target-list goal-schema="Nasdaq100InSchema_logical_value" name="update">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="Name">input.Name</set>
+                    <set field="Price">old.Price</set>
+                    <set field="Color">old.Color</set>
+                    <set field="Description">input.Description</set>
+                </expressions>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+            </target-list>
+            <param name="gui:x" value="-106"/>
+            <param name="gui:y" value="-16"/>
+        </box>
+        <box name="QueryPrice" type="query">
+            <input port="1" stream="PriceStream"/>
+            <output port="1" stream="PriceQueryOutput"/>
+            <dataref id="querytable" name="Nasdaq100Table"/>
+            <param name="operation" value="read"/>
+            <param name="where" value="secondary-key"/>
+            <param name="key-field.0" value="Price"/>
+            <param name="key-lowerbound-value.0" value="MinPrice"/>
+            <param name="key-lowerbound-operation.0" value="gt"/>
+            <param name="key-upperbound-value.0" value="MaxPrice"/>
+            <param name="key-upperbound-operation.0" value="le"/>
+            <param name="key-field.1" value="Color"/>
+            <param name="key-lowerbound-operation.1" value="begin"/>
+            <param name="key-upperbound-operation.1" value="end"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-explicit"/>
+            <param name="order-by-direction" value="descending"/>
+            <param name="order-by-key-field.0" value="Price"/>
+            <param name="order-by-key-field.1" value="Color"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <item name="current" selection="all"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list goal-schema="Nasdaq100InSchema" name="no-match">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="Name">null</set>
+                    <set field="Symbol">null</set>
+                    <set field="Price">null</set>
+                    <set field="Color">null</set>
+                    <set field="Description">"No stocks in the table fall within the specified price range."</set>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-129"/>
+            <param name="gui:y" value="371"/>
+        </box>
+        <box name="QueryPriceColor" type="query">
+            <input port="1" stream="PriceColorStream"/>
+            <output port="1" stream="PriceColorQueryOutput"/>
+            <dataref id="querytable" name="Nasdaq100Table"/>
+            <param name="operation" value="read"/>
+            <param name="where" value="secondary-key"/>
+            <param name="key-field.0" value="Price"/>
+            <param name="key-lowerbound-operation.0" value="begin"/>
+            <param name="key-upperbound-value.0" value="MaxPrice"/>
+            <param name="key-upperbound-operation.0" value="le"/>
+            <param name="key-field.1" value="Color"/>
+            <param name="key-lowerbound-value.1" value="Color"/>
+            <param name="key-lowerbound-operation.1" value="eq"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-explicit"/>
+            <param name="order-by-direction" value="ascending"/>
+            <param name="order-by-key-field.0" value="Price"/>
+            <param name="order-by-key-field.1" value="Color"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <item name="current" selection="all">
+                    <remove field="Color"/>
+                </item>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list goal-schema="Nasdaq100InSchema" name="no-match">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="Color">input.Color</set>
+                    <set field="Name">null</set>
+                    <set field="Symbol">null</set>
+                    <set field="Price">null</set>
+                    <set field="Description">"No stock matched the specified color and was less than MaxPrice."</set>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-116"/>
+            <param name="gui:y" value="198"/>
+        </box>
+        <box name="UpCase" type="map">
+            <input port="1" stream="SymbolStream"/>
+            <output port="1" stream="out:UpCase_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <replace field="Symbol">upper(Symbol)</replace>
+                </item>
+            </target-list>
+            <param name="gui:x" value="-129"/>
+            <param name="gui:y" value="96"/>
+        </box>
+        <box name="UpCaseAlso" type="map">
+            <input port="1" stream="UpdatePriceStream"/>
+            <output port="1" stream="out:UpCaseAlso_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <replace field="Symbol">upper(Symbol)</replace>
+                </item>
+            </target-list>
+            <param name="gui:x" value="-142"/>
+            <param name="gui:y" value="475"/>
+        </box>
+        <output-stream name="DeleteSymbolOutput">
+            <param name="gui:x" value="171"/>
+            <param name="gui:y" value="575"/>
+        </output-stream>
+        <output-stream name="Nasdaq100Output">
+            <param name="gui:x" value="166"/>
+            <param name="gui:y" value="-16"/>
+        </output-stream>
+        <output-stream name="PriceColorQueryOutput">
+            <param name="gui:x" value="166"/>
+            <param name="gui:y" value="198"/>
+        </output-stream>
+        <output-stream name="PriceQueryOutput">
+            <param name="gui:x" value="166"/>
+            <param name="gui:y" value="371"/>
+        </output-stream>
+        <box name="ReadNasdaq100Table" type="query">
+            <input port="1" stream="out:UpCase_1"/>
+            <output port="1" stream="SymbolOutputStream"/>
+            <dataref id="querytable" name="Nasdaq100Table"/>
+            <param name="operation" value="read"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="Symbol"/>
+            <param name="key-lowerbound-value.0" value="input.Symbol"/>
+            <param name="key-lowerbound-operation.0" value="eq"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-explicit"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <item name="current" selection="none"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+                <expressions>
+                    <include field="Name">current.Name</include>
+                    <include field="Symbol">current.Symbol</include>
+                    <include field="Price">current.Price</include>
+                    <include field="Color">current.Color</include>
+                    <include field="Description">current.Description</include>
+                </expressions>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list goal-schema="Nasdaq100InSchema" name="no-match">
+                <item name="input" selection="all"/>
+                <expressions>
+                    <set field="Name">null</set>
+                    <set field="Symbol">input.Symbol</set>
+                    <set field="Price">null</set>
+                    <set field="Color">null</set>
+                    <set field="Description">"Not a member of the NASDAQ-100."</set>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="31"/>
+            <param name="gui:y" value="96"/>
+        </box>
+        <box name="UpdatePriceQuery" type="query">
+            <input port="1" stream="out:UpCaseAlso_1"/>
+            <output port="1" stream="UpdatePriceOutput"/>
+            <dataref id="querytable" name="Nasdaq100Table"/>
+            <param name="operation" value="write"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="Symbol"/>
+            <param name="key-value.0" value="input.Symbol"/>
+            <param name="write-type" value="update"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-nothing"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="all"/>
+                <item name="current" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list goal-schema="Nasdaq100InSchema_logical_value" name="update">
+                <item name="input" selection="all"/>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+            </target-list>
+            <param name="gui:x" value="-11"/>
+            <param name="gui:y" value="475"/>
+        </box>
+        <output-stream name="SymbolOutputStream">
+            <param name="gui:x" value="160"/>
+            <param name="gui:y" value="96"/>
+        </output-stream>
+        <output-stream name="UpdatePriceOutput">
+            <param name="gui:x" value="166"/>
+            <param name="gui:y" value="474"/>
+        </output-stream>
+    </add>
+</modify>

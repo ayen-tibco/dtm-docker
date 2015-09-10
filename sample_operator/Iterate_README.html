@@ -1,0 +1,732 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>
+      Iterate Operator Sample
+    </title>
+    <link rel="stylesheet" type="text/css" href="''">
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+    <style type="text/css">
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    sb-readme.css : Styles for StreamBase Help READMEs
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    body {
+    background: #fff;
+    text-align: left;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    padding: 10px;  
+    margin: 0;
+    }
+
+    h1 {
+    color: black;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 0.75em 0px;
+    }
+
+    h2 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 130%;
+    font-weight: bold;
+    border-top: 0.5px solid gray; 
+    }
+
+    h3 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 120%;
+    font-style: italic;
+    font-weight: bold;
+    width: 50%;
+    border-top: 1px dashed;
+    }
+
+    h3.subtitle {
+    color: black;
+    text-align: center;
+    border: none;
+    margin: -1.25em 0 1em 0;
+    padding: none;
+    font-size: 120%;
+    font-weight: bold;
+    font-style: normal;
+    width: 100%;
+    }
+
+    h4 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 110%;
+    font-weight: bold;
+    }
+
+    h5 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-style: italic;
+    }
+
+    h6 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-weight: bold;
+    }
+
+    table {
+    border-collapse: collapse;
+    border-left: 1px solid gray;
+    border-top: 1px solid gray;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    }
+
+    table.simplelist {
+    border: none;
+    }
+
+    thead {
+    line-height: 1em;
+    }
+
+    th {
+    background: #ddeeff;
+    text-align: left;
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    td {
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    table p {
+    margin-bottom: 2px;
+    margin-top: 3px;
+    }
+
+    ul, ol {
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+    margin-left: 1.5em;
+    padding: 0 0 0 20px;
+    }
+
+    li {
+    margin-top: 0;
+    margin-bottom: 0;    
+    }
+
+    ol[compact] li p, ul[compact] li p {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+    }
+
+    li p {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    }
+
+    div.variablelist {
+    margin-left: 2em;
+    }
+
+    dt {
+    font-size: 95%;
+    font-weight: bold;
+    margin-top: 8.0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    dd {
+    margin-left: 1em;
+    }
+
+    div.column dt {
+    font-size: 95%;
+    font-weight: normal;
+    margin-top: 0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    img {
+    border: none;
+    }
+
+    blockquote {
+    margin: 0 0 0 2em;
+    padding: 5px 0;
+    }
+
+    span {
+    margin: 0;
+    padding: 0;
+    }
+
+    a {
+    margin: 0;
+    padding: 0;
+    }
+
+    a:link, a:visited {
+    color: #003399;
+    }
+
+    a:hover {
+    color: #ff0000;
+    }
+
+    span.guilabel, 
+    span.guimenuitem, 
+    span.guibutton {
+    font-weight: bold;
+    color: #333333;
+    }
+
+    .column { 
+    padding: 2px; 
+    }
+
+    *.box {
+    border: 1px solid blue;
+    margin: 10px;
+    background: #def;
+    }
+
+    *.box *.title{
+    margin-top: 0;
+    }
+
+    *.box * {
+    margin-left: 1em;
+    }
+
+    div.back2top {
+    margin-top: 30px;
+    }
+
+    div.literallayout p {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    div.note *.title,
+    div.important *.title,
+    div.caution *.title,
+    div.tip *.title,
+    div.warning *.title {
+    margin: 0em 0em -0.85em 0em;
+    font-size: 90%;
+    }
+
+    li div.note *.title, 
+    li div.important *.title, 
+    li div.caution *.title, 
+    li div.tip *.title, 
+    li div.warning *.title {
+    margin: 0em 0em -0.2em 0em;
+    font-size: 90%;
+    }
+
+    table div.note *.title,
+    table div.important *.title,
+    table div.caution *.title,
+    table div.tip *.title,
+    table div.warning *.title {
+    margin: 0em 0em -0.5em 0em;
+    font-size: 90%;
+    }
+
+    pre.programlisting {
+    border: 1.0px solid gray;
+    padding: 2px;
+    background: #EEE;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    pre.programlisting em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    pre.screen {
+    border: 1px solid gray;
+    padding: 2px;
+    background: #FBFFFF;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attribute, code.sgmltag-element, code.sgml-emptytag, code.function, 
+    code.type, code.exceptionname, code.parameter, code.varname, code.interfacename, 
+    code.oointerface, code.classname, code.ooclass, code.methodname, code.coexception,
+    code.command, code.option, code.filename, code.literal, code.uri, code.constant,
+    code.methodsynopsis, pre.classsynopsis, span.type, span.markup 
+    {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attvalue, 
+    code.filename em.replaceable, 
+    code.literal  em.replaceable, 
+    code.filename em.replaceable code,
+    code.literal  em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    em.replaceable {
+    font-style: italic;
+    }
+
+    code.sgmltag-element:before {
+    content:'<';
+    }
+
+    code.sgmltag-element:after {
+    content:'>';
+    } 
+
+    h2 code.sgmltag-element, h3 code.sgmltag-element, h4 code.sgmltag-element {
+    font-family: inherit; 
+    }
+
+    strong.command, strong.keycap {
+    color: #333333;
+    }
+
+    strong.userinput {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #e0e0e0;
+    }
+
+    p.nospaceabove {
+    margin-top: -1.0em;
+    }
+
+    div#header {
+    margin: 0;
+    padding-bottom: 0;
+    text-align: left;
+    font-size : 90%;
+    }
+
+    p#readmebanner {
+    font-size: 100%;
+    font-weight: bold;
+    text-align: center;
+    color: navy;
+    border-bottom: 1px solid #333;
+    }
+
+    div.toc dt {
+    font-weight: normal;
+    line-height: 1em;
+    margin-top: 0;
+    margin-bottom: 0.35em;
+    }
+
+    div.article>div.section, div.preface>div.section {
+    padding: 0 10px 0 10px;
+    }
+
+    div#footer {
+    padding-left: 0;
+    border-top: 1px solid #333;
+    font-size: 90%;
+    margin-top: 18pt;
+    }
+
+    div#footer p {
+    margin-top: 0;
+    }
+
+    </style>
+  </head>
+  <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+    <a name="_top"></a>
+    <div id="header">
+    </div>
+
+    <div id="subPageMasthead">
+      <p id="readmebanner">
+        StreamBase Documentation
+      </p>
+    </div>
+
+    <div class="article">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title">
+              <a name="Iterate" id="Iterate"></a>Iterate Operator Sample
+            </h1>
+          </div>
+        </div>
+      </div>
+      <a class="ix" name="Iterate sample"></a><a class="ix" name="samples, Iterate operator"></a>
+      <p>
+        This topic describes <code class="filename">Iterate.sbapp</code>, the Iterate operator's
+        sample application.
+      </p>
+
+      <p>
+        This sample uses an Aggregate operator and the <code class=
+        "function">aggregatelist()</code> expression language function to aggregate incoming tuples
+        and collect them by their Symbol field into three-element lists of tuples, so that every
+        list output contains three input tuples of the same stock. An <span>Iterate operator</span>
+        then takes these lists, extracts their component tuples, and feeds them to a Map operator,
+        which reorders and supplements the output fields.
+      </p>
+
+      <p>
+        This sample demonstrates one use of the <code class="function">aggregatelist()</code>
+        function, to create lists with elements from individual tuples, and demonstrates a use of
+        the Iterate operator, to extract the elements from a list back into individual tuples
+        again.
+      </p>
+
+      <p>
+        The incoming tuple contains fields named Symbol, Name, Description, Volume, and Price.
+      </p>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e12921" id="d0e12921"></a>Running Iterate.sbapp in <span>StreamBase
+                Studio</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1" compact>
+            <li class="listitem">
+              <p>
+                In the Package Explorer, double-click to open the <code class=
+                "filename">Iterate.sbapp</code> application. Make sure the application is the
+                currently active tab in the EventFlow Editor.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click the <span class="guilabel">Run</span> button. This opens the SB Test/Debug
+                perspective and starts the application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Manual Input view, select the <code class="literal">StockIn</code> input
+                stream.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter a dozen or so tuples, alternating the Symbol field, but re-using the same
+                Symbol several times, clicking <span class="guilabel">Send Data</span> after each
+                entry. For example, enter:
+              </p>
+
+              <pre class="programlisting">
+IBM, IBM Corporation, 4000, 127.81
+DELL, Dell Inc, 2500, 13.62
+IBM, IBM Corporation, 1000, 128.00
+DELL, Dell Inc, 500, 13.64
+MSFT, Microsoft Corporation, 6000, 28.70
+DELL, Dell Inc, 2000, 13.75
+MSFT, Microsoft Corporation, 400, 27.75
+IBM, IBM Corporation, 2500, 129.62
+</pre>
+              <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+                <h3 class="title">
+                  Tip
+                </h3>
+
+                <p>
+                  Instead of typing in the Manual Input view, while <code class=
+                  "filename">Iterate.sbapp</code> is still running in Studio, open a <a href=
+                  "../testdebug/sbcommandprompt.html" class="olink">StreamBase Command Prompt</a>.
+                  Start an enqueue session for the sample's input stream by typing <strong class=
+                  "userinput"><code>sbc&nbsp;enqueue&nbsp;StockIn</code></strong>. Then copy the
+                  contents of the gray box above and paste them into the command prompt window.
+                </p>
+              </div>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Inspect the Application Output view. Notice that there are three entries for Dell
+                and three for IBM. There is no output for Microsoft yet because we have only
+                entered two tuples. Enter one more Microsoft tuple to trigger its entries in the
+                Application Output view:
+              </p>
+
+              <pre class="programlisting">
+MSFT, Microsoft Corporation, 1400, 29.45
+</pre>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter more tuples and watch them accumulate in groups of three.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                When done, press <span class="keycap"><strong>F9</strong></span> or click the
+                <span class="guilabel">Stop Running Application</span> button.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e12981" id="d0e12981"></a>Running Iterate.sbapp in Terminal Windows
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          This section describes how to run the sample in UNIX terminal windows or Windows command
+          prompt windows. On Windows, be sure to use the <span><span>StreamBase</span> Command
+          Prompt</span> from the Start menu as described in the <em class="citetitle">Test/Debug
+          Guide</em>, not the default command prompt.
+        </p>
+
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1" compact>
+            <li class="listitem">
+              <p>
+                Open terminal windows on UNIX, or three <span><span>StreamBase</span> Command
+                Prompt</span>s on Windows. In each window, navigate to the directory where the
+                sample is installed, or to your workspace copy of the sample, as described above.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 1, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbd Iterate.sbapp</code></strong>
+              </p>
+
+              <p>
+                The window shows <code class="computeroutput">notice[StreamBaseServer] listening on
+                port 10000</code>.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 2: type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbc dequeue StockOut</code></strong>
+              </p>
+
+              <p>
+                No output is displayed at this point, but the dequeuer is prepared to receive
+                output. This window will eventually show the output of the application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbc enqueue StockIn</code></strong>
+              </p>
+
+              <p>
+                The <span class="command"><strong>sbc</strong></span> command now awaits keyboard
+                input.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type:
+              </p>
+
+              <pre class="programlisting">
+IBM, IBM Corporation, 4000, 127.81
+DELL, Dell Inc, 2500, 13.62
+IBM, IBM Corporation, 1000, 128.00
+DELL, Dell Inc, 500, 13.64
+MSFT, Microsoft Corporation, 6000, 28.70
+DELL, Dell Inc, 2000, 13.75
+</pre>
+              <p>
+                Observe that nothing appears in window 2 until you type the last line above, which
+                is the third entry for Dell.
+              </p>
+
+              <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+                <h3 class="title">
+                  Tip
+                </h3>
+
+                <p>
+                  Instead of typing the entries shown, you can copy and paste into window 3.
+                </p>
+              </div>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type two more lines:
+              </p>
+
+              <pre class="programlisting">
+MSFT, Microsoft Corporation, 400, 27.75
+IBM, IBM Corporation, 2500, 129.62
+</pre>
+              <p>
+                Observe that output lines for IBM now appear in window 2.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type one more line:
+              </p>
+
+              <pre class="programlisting">
+MSFT, Microsoft Corporation, 1400, 29.45
+</pre>
+              <p>
+                Observe that output lines for Microsoft now appear in window 2.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter more tuples and watch them accumulate in groups of three.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3 type <span class="keycap"><strong>Ctrl</strong></span>+<span class=
+                "keycap"><strong>C</strong></span> to stop the <span class="command"><strong>sbc
+                enqueue</strong></span> command.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type the following command to terminate the server and dequeuer:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbadmin shutdown</code></strong>
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e13078" id="d0e13078"></a>Sample Location
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          When you load the sample into StreamBase Studio, Studio copies the sample's files to a
+          project folder in your Studio workspace directory. Because the Studio workspace location
+          is normally part of your home directory, you have full access rights there by default.
+        </p>
+
+        <div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <h3 class="title">
+            Important
+          </h3>
+
+          <p>
+            Load this sample in StreamBase Studio, and thereafter use the Studio workspace copy of
+            the sample to run and test it, even when running from the command prompt.
+          </p>
+        </div>
+
+        <p>
+          Using the workspace copy of the sample avoids the permission problems that can occur when
+          trying to work with the initially installed location of the sample. The default workspace
+          location for this sample is:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>studio-workspace</code></em>/sample_operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the <span><span>location</span></span> of <em class=
+          "replaceable"><code>studio-workspace</code></em> on your system.
+        </p>
+
+        <p>
+          In the default TIBCO StreamBase installation, this sample's files are initially installed
+          in:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>streambase-install-dir</code></em>/sample/operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the location of <em class=
+          "replaceable"><code>streambase-install-dir</code></em> on your system. This location may
+          require administrator privileges for write access, depending on your platform.
+        </p>
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>
+        Copyright © 2004-2015 TIBCO Software Inc. All rights reserved.
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <named-schemas>
+            <schema name="QuoteSchema">
+                <field name="symbol" type="string"/>
+                <field name="price" type="double"/>
+            </schema>
+        </named-schemas>
+        <table-schemas>
+            <table-schema name="QuoteTableSchema" schema="QuoteSchema">
+                <primary-index type="btree">
+                    <field name="symbol"/>
+                </primary-index>
+            </table-schema>
+        </table-schemas>
+        <data name="NameValuePairs" shared="false" source="concrete" type="querytable">
+            <param name="storage-method" value="memory"/>
+            <param name="replicated" value="false"/>
+            <param name="table-schema" value="QuoteTableSchema"/>
+            <param name="truncate" value="false"/>
+            <preload format="csv" mode="empty"/>
+            <param name="gui:x" value="227"/>
+            <param name="gui:y" value="220"/>
+            <param name="gui:width" value="194"/>
+            <param name="gui:height" value="72"/>
+        </data>
+        <stream name="SetPrice" schema="QuoteSchema">
+            <param name="gui:x" value="167"/>
+            <param name="gui:y" value="71"/>
+        </stream>
+        <box name="EveryFiveSeconds" type="metronome">
+            <output port="1" stream="out:EveryFiveSeconds_1"/>
+            <param name="interval" value="5"/>
+            <param name="timestamp-field" value="time"/>
+            <param name="gui:x" value="167"/>
+            <param name="gui:y" value="-43"/>
+        </box>
+        <box name="ReadAllRows" type="query">
+            <input port="1" stream="out:EveryFiveSeconds_1"/>
+            <output port="1" stream="CurrentPrices"/>
+            <dataref id="querytable" name="NameValuePairs"/>
+            <param name="operation" value="read"/>
+            <param name="where" value="all-rows"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-explicit"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <item name="current" selection="all"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="symbol">string(null)</set>
+                    <set field="price">double(null)</set>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="294"/>
+            <param name="gui:y" value="-43"/>
+        </box>
+        <box name="RecordPrice" type="query">
+            <input port="1" stream="SetPrice"/>
+            <dataref id="querytable" name="NameValuePairs"/>
+            <param name="operation" value="write"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="symbol"/>
+            <param name="key-value.0" value="symbol"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="force"/>
+            <param name="no-match-mode" value="output-no-match-nothing"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+                <item name="current" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="all"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+            </target-list>
+            <param name="gui:x" value="294"/>
+            <param name="gui:y" value="71"/>
+        </box>
+        <output-stream name="CurrentPrices">
+            <param name="gui:x" value="421"/>
+            <param name="gui:y" value="-43"/>
+        </output-stream>
+    </add>
+</modify>

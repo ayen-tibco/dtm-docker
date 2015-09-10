@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <stream name="ComstockIn">
+            <schema>
+                <field name="Symbol_C" type="string"/>
+                <field name="PricePS_C" type="double"/>
+                <field name="Time_C" type="int"/>
+            </schema>
+            <param name="gui:x" value="76"/>
+            <param name="gui:y" value="111"/>
+        </stream>
+        <stream name="ReutersIn">
+            <schema>
+                <field name="Symbol_R" type="string"/>
+                <field name="PricePS_R" type="double"/>
+                <field name="Time_R" type="int"/>
+            </schema>
+            <param name="gui:x" value="76"/>
+            <param name="gui:y" value="12"/>
+        </stream>
+        <box name="Join" type="join">
+            <input port="1" stream="ReutersIn"/>
+            <input port="2" stream="ComstockIn"/>
+            <output port="1" stream="JoinOut"/>
+            <param name="predicate" value="Symbol_R ==Symbol_C &amp;&amp; abs(PricePS_R - PricePS_C) &gt;= 1.0"/>
+            <param name="join-by" value="values"/>
+            <param name="left-window-size" value="60"/>
+            <param name="right-window-size" value="60"/>
+            <param name="left-order-on-field" value="Time_R"/>
+            <param name="right-order-on-field" value="Time_C"/>
+            <param name="expression-name.0" value="DeltaPricePS"/>
+            <param name="expression.0" value="PricePS_R - PricePS_C"/>
+            <param name="expression-name.1" value="PricePS_R"/>
+            <param name="expression.1" value="PricePS_R"/>
+            <param name="expression-name.2" value="PricePS_C"/>
+            <param name="expression.2" value="PricePS_C"/>
+            <param name="expression-name.3" value="Time_R"/>
+            <param name="expression.3" value="Time_R"/>
+            <param name="delta-mode" value="false"/>
+            <param name="gui:x" value="189"/>
+            <param name="gui:y" value="61"/>
+            <param name="gui:bends:1" value="160,42;168,81"/>
+            <param name="gui:bends:2" value="146,141;156,101"/>
+        </box>
+        <output-stream name="JoinOut">
+            <param name="gui:x" value="269"/>
+            <param name="gui:y" value="61"/>
+        </output-stream>
+    </add>
+</modify>

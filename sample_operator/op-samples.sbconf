@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    This configuration file is provided only for running 
+    some of the operator samples at the command prompt. 
+    This file is not used at all by StreamBase Studio. 
+    Studio locates modules on its module search path and 
+    locates resources (such as feed simulation files) on 
+    its resource search path, and always ignores settings 
+    in the <module-search> and <operator-resource-search> 
+    elements of any server configuration file.
+-->
+<streambase-configuration xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.streambase.com/schemas/sbconf/">
+  <global>
+    <module-search directory="./Modules"/>
+    <operator-resource-search directory="./ResourceFiles"/>
+  </global>
+</streambase-configuration>

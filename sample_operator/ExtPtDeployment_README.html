@@ -1,0 +1,1187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>
+      Extension Point Deployment Sample
+    </title>
+    <link rel="stylesheet" type="text/css" href="''">
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+    <style type="text/css">
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    sb-readme.css : Styles for StreamBase Help READMEs
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    body {
+    background: #fff;
+    text-align: left;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    padding: 10px;  
+    margin: 0;
+    }
+
+    h1 {
+    color: black;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 0.75em 0px;
+    }
+
+    h2 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 130%;
+    font-weight: bold;
+    border-top: 0.5px solid gray; 
+    }
+
+    h3 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 120%;
+    font-style: italic;
+    font-weight: bold;
+    width: 50%;
+    border-top: 1px dashed;
+    }
+
+    h3.subtitle {
+    color: black;
+    text-align: center;
+    border: none;
+    margin: -1.25em 0 1em 0;
+    padding: none;
+    font-size: 120%;
+    font-weight: bold;
+    font-style: normal;
+    width: 100%;
+    }
+
+    h4 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 110%;
+    font-weight: bold;
+    }
+
+    h5 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-style: italic;
+    }
+
+    h6 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-weight: bold;
+    }
+
+    table {
+    border-collapse: collapse;
+    border-left: 1px solid gray;
+    border-top: 1px solid gray;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    }
+
+    table.simplelist {
+    border: none;
+    }
+
+    thead {
+    line-height: 1em;
+    }
+
+    th {
+    background: #ddeeff;
+    text-align: left;
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    td {
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    table p {
+    margin-bottom: 2px;
+    margin-top: 3px;
+    }
+
+    ul, ol {
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+    margin-left: 1.5em;
+    padding: 0 0 0 20px;
+    }
+
+    li {
+    margin-top: 0;
+    margin-bottom: 0;    
+    }
+
+    ol[compact] li p, ul[compact] li p {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+    }
+
+    li p {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    }
+
+    div.variablelist {
+    margin-left: 2em;
+    }
+
+    dt {
+    font-size: 95%;
+    font-weight: bold;
+    margin-top: 8.0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    dd {
+    margin-left: 1em;
+    }
+
+    div.column dt {
+    font-size: 95%;
+    font-weight: normal;
+    margin-top: 0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    img {
+    border: none;
+    }
+
+    blockquote {
+    margin: 0 0 0 2em;
+    padding: 5px 0;
+    }
+
+    span {
+    margin: 0;
+    padding: 0;
+    }
+
+    a {
+    margin: 0;
+    padding: 0;
+    }
+
+    a:link, a:visited {
+    color: #003399;
+    }
+
+    a:hover {
+    color: #ff0000;
+    }
+
+    span.guilabel, 
+    span.guimenuitem, 
+    span.guibutton {
+    font-weight: bold;
+    color: #333333;
+    }
+
+    .column { 
+    padding: 2px; 
+    }
+
+    *.box {
+    border: 1px solid blue;
+    margin: 10px;
+    background: #def;
+    }
+
+    *.box *.title{
+    margin-top: 0;
+    }
+
+    *.box * {
+    margin-left: 1em;
+    }
+
+    div.back2top {
+    margin-top: 30px;
+    }
+
+    div.literallayout p {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    div.note *.title,
+    div.important *.title,
+    div.caution *.title,
+    div.tip *.title,
+    div.warning *.title {
+    margin: 0em 0em -0.85em 0em;
+    font-size: 90%;
+    }
+
+    li div.note *.title, 
+    li div.important *.title, 
+    li div.caution *.title, 
+    li div.tip *.title, 
+    li div.warning *.title {
+    margin: 0em 0em -0.2em 0em;
+    font-size: 90%;
+    }
+
+    table div.note *.title,
+    table div.important *.title,
+    table div.caution *.title,
+    table div.tip *.title,
+    table div.warning *.title {
+    margin: 0em 0em -0.5em 0em;
+    font-size: 90%;
+    }
+
+    pre.programlisting {
+    border: 1.0px solid gray;
+    padding: 2px;
+    background: #EEE;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    pre.programlisting em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    pre.screen {
+    border: 1px solid gray;
+    padding: 2px;
+    background: #FBFFFF;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attribute, code.sgmltag-element, code.sgml-emptytag, code.function, 
+    code.type, code.exceptionname, code.parameter, code.varname, code.interfacename, 
+    code.oointerface, code.classname, code.ooclass, code.methodname, code.coexception,
+    code.command, code.option, code.filename, code.literal, code.uri, code.constant,
+    code.methodsynopsis, pre.classsynopsis, span.type, span.markup 
+    {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attvalue, 
+    code.filename em.replaceable, 
+    code.literal  em.replaceable, 
+    code.filename em.replaceable code,
+    code.literal  em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    em.replaceable {
+    font-style: italic;
+    }
+
+    code.sgmltag-element:before {
+    content:'<';
+    }
+
+    code.sgmltag-element:after {
+    content:'>';
+    } 
+
+    h2 code.sgmltag-element, h3 code.sgmltag-element, h4 code.sgmltag-element {
+    font-family: inherit; 
+    }
+
+    strong.command, strong.keycap {
+    color: #333333;
+    }
+
+    strong.userinput {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #e0e0e0;
+    }
+
+    p.nospaceabove {
+    margin-top: -1.0em;
+    }
+
+    div#header {
+    margin: 0;
+    padding-bottom: 0;
+    text-align: left;
+    font-size : 90%;
+    }
+
+    p#readmebanner {
+    font-size: 100%;
+    font-weight: bold;
+    text-align: center;
+    color: navy;
+    border-bottom: 1px solid #333;
+    }
+
+    div.toc dt {
+    font-weight: normal;
+    line-height: 1em;
+    margin-top: 0;
+    margin-bottom: 0.35em;
+    }
+
+    div.article>div.section, div.preface>div.section {
+    padding: 0 10px 0 10px;
+    }
+
+    div#footer {
+    padding-left: 0;
+    border-top: 1px solid #333;
+    font-size: 90%;
+    margin-top: 18pt;
+    }
+
+    div#footer p {
+    margin-top: 0;
+    }
+
+    </style>
+  </head>
+  <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+    <a name="_top"></a>
+    <div id="header">
+    </div>
+
+    <div id="subPageMasthead">
+      <p id="readmebanner">
+        StreamBase Documentation
+      </p>
+    </div>
+
+    <div class="article">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title">
+              <a name="ExtPtDeployment" id="ExtPtDeployment"></a>Extension Point Deployment Sample
+            </h1>
+          </div>
+        </div>
+      </div>
+      <a class="ix" name="Extension Point deployment, using"></a><a class="ix" name=
+      "samples, Extension Point deployment"></a>
+      <p>
+        This sample is a variation on the Extension Point Operator sample. For maximum benefit,
+        first run and understand the Extension Point sample before working through this variation.
+      </p>
+
+      <p>
+        The purpose of this variation is to illustrate the use of <span>StreamBase</span>
+        deployment files to define the modules to be run by an Extension Point operator. The
+        <span>StreamBase</span> interface in this sample specifies externally defined modules. Two
+        example <code class="filename">.sbdeploy</code> deployment files are provided, which you
+        use to run this sample.
+      </p>
+
+      <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+        <h3 class="title">
+          Note
+        </h3>
+
+        <p>
+          Do not run this sample's EventFlow file, <code class=
+          "filename">ExtPtDeployment.sbapp</code>. Instead, run one or both of this sample's
+          <span>StreamBase</span> deployment files as described in the steps below.
+        </p>
+      </div>
+
+      <p>
+        This sample uses an Extension Point operator to dispatch tuples to two pairs of
+        sub-modules, based on a user-specified action at runtime. The first pair of sub-modules
+        either doubles or triples the integer field in the incoming tuple, depending on the
+        specification in the <code class="literal">action</code> field of the incoming tuple. If
+        the <code class="literal">action</code> field is <code class="literal">null</code>, the
+        incoming tuple is sent to both sub-modules. You run <code class=
+        "filename">ExtPtDeployment1.sbdeploy</code> to run this sample with the first pair of
+        sub-modules.
+      </p>
+
+      <p>
+        The second pair of sub-modules have the same relationship to the top-level module, but they
+        triple or quadruple the incoming tuple's integer field (instead of double or triple). Run
+        <code class="filename">ExtPtDeployment2.sbdeploy</code> to run this sample with the second
+        pair of sub-modules.
+      </p>
+
+      <p>
+        This sample illustrates several aspects of Extension Point operators and
+        <span>StreamBase</span> interfaces. There are two related samples that complete the picture
+        on these subjects:
+      </p>
+
+      <div class="informaltable">
+        <table border="1">
+          <colgroup>
+            <col width="23%" class="c1">
+            <col width="77%" class="c2">
+          </colgroup>
+
+          <thead>
+            <tr>
+              <th align="center">
+                Sample
+              </th>
+              <th align="center">
+                Description
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>
+                <a href="Interfaces.html" class="olink">Interfaces Sample</a>
+              </td>
+              <td>
+                Demonstrates how to use <span>StreamBase</span> interfaces to enforce a set of
+                stream and schema definitions, and to use different implementations of the same
+                interface for different purposes.
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <a href="ExtensionPoint.html" class="olink">Extension Point Operator Sample</a>
+              </td>
+              <td>
+                This sample uses an Extension Point operator to dispatch tuples based on a
+                user-specified action to one of two modules, which double or triple an integer
+                field within the tuple. If no action is specified, the tuple is sent to both
+                modules. This sample illustrates <span>StreamBase</span> interfaces used with the
+                Extension Point operator, and illustrates <a href="../admin/dispatchstyles.html"
+                class="olink">module dispatch</a> based on a predicate condition.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="ExtPtDeployment_files" id="ExtPtDeployment_files"></a>This Sample's Files
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          The Extension Point Deployment sample is composed of following files:
+        </p>
+
+        <div class="informaltable">
+          <table border="1">
+            <colgroup>
+              <col width="28%" class="c1">
+              <col width="72%" class="c2">
+            </colgroup>
+
+            <thead>
+              <tr>
+                <th align="center">
+                  File
+                </th>
+                <th align="center">
+                  Purpose
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>
+                  <code class="filename">ExtPtDeployment.sbapp</code>
+                </td>
+                <td>
+                  The top-level application for this sample. To run this sample, DO NOT RUN this
+                  EventFlow module. Instead, run one of the two <span>StreamBase</span> deployment
+                  files described next.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <code class="filename">ExtPtDeployment1.sbdeploy</code>
+                </td>
+                <td>
+                  A <span>StreamBase</span> deployment file that specifies running either
+                  <code class="filename">Doubler.sbapp</code> or <code class=
+                  "filename">Tripler.sbapp</code> as modules that implement the Multiplier
+                  interface.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <code class="filename">ExtPtDeployment2.sbdeploy</code>
+                </td>
+                <td>
+                  A <span>StreamBase</span> deployment file that specifies running either
+                  <code class="filename">Tripler.sbapp</code> or <code class=
+                  "filename">Quadrupler.sbapp</code> as modules that implement the Multiplier
+                  interface.
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="2">
+                  The following files are located in the <code class="filename">Modules</code>
+                  subdirectory of the <code class="filename">operator</code> project directory.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <code class="filename">Multiplier.sbint</code>
+                </td>
+                <td>
+                  A <span>StreamBase</span> interface that defines two input streams and one output
+                  stream, and defines named schemas used by those streams.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <code class="filename">Doubler.sbapp</code>
+                </td>
+                <td>
+                  A module that implements the streams and schemas defined in the <code class=
+                  "filename">Multiplier.sbint</code> interface. This module doubles its input
+                  value, and appends as a list(string) the <span>StreamBase</span> path through
+                  this module.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <code class="filename">Tripler.sbapp</code>
+                </td>
+                <td>
+                  Another module that implements the <code class="filename">Multiplier.sbint</code>
+                  interface. This module performs the same actions as <code class=
+                  "filename">Doubler.sbapp</code> except that it triples its input value.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <code class="filename">Quadrupler.sbapp</code>
+                </td>
+                <td>
+                  Yet another implementation of the <code class="filename">Multiplier.sbint</code>
+                  interface. This module quadruples its input value.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Open <code class="filename">ExtPtDeployment.sbapp</code> in Studio and look at the
+          Properties view for the Extension Point operator named <code class=
+          "literal">Multiply</code>. The Concurrency tab is entirely responsible for directing
+          input tuples to one or both of the referenced modules.
+        </p>
+
+        <div class="itemizedlist">
+          <ul class="itemizedlist" type="disc" compact>
+            <li class="listitem">
+              <p>
+                If a tuple enters input port 2, the dispatch style is Broadcast, which means the
+                tuple is sent to both modules.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                If a tuple enters input port 1, the dispatch style is Name. In this case, the
+                expression <strong class="userinput"><code>lower(action)</code></strong> must
+                resolve to the identifier of one of the modules defined in the
+                <span>StreamBase</span> deployment file.
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          Unlike the Extension Point sample, the <code class=
+          "filename">ExtPtDeployment.sbapp</code> module specifies <span class="guilabel">Defined:
+          Externally</span> in the Modules tab of the <code class="literal">Multiply</code>
+          interface's Properties view, and defines an Extension Point ID of <code class=
+          "literal">extpt.deployment.multiplier</code>. The Extension Point ID is what links the
+          EventFlow module to one or more <span>StreamBase</span> deployment files. To be able run
+          this EventFlow application, a deployment file must specify:
+        </p>
+
+        <div class="itemizedlist">
+          <ul class="itemizedlist" type="disc" compact>
+            <li class="listitem">
+              <p>
+                This EventFlow module's name in the <code class="literal">module</code> attribute
+                of the <code class="literal">&lt;application&gt;</code> element.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                The same Extension Point ID in the <code class="literal">target-id</code> attribute
+                of an <code class="literal">&lt;extension-point&gt;</code> element as specified in
+                the EventFlow module.
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          The following fragment of this sample's deployment files shows the required lines:
+        </p>
+
+        <pre class="programlisting">
+...
+&lt;runtime&gt;
+  &lt;application container="default" module="<span class=
+"bold"><strong>ExtPtDeployment.sbapp</strong></span>"&gt;
+    &lt;extension-point-contents&gt;
+      &lt;extension-point target-id="<span class=
+"bold"><strong>extpt.deployment.multiplier</strong></span>"&gt;
+...
+</pre>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="ExtPtDeployment_running-studio" id=
+                "ExtPtDeployment_running-studio"></a>Running This Sample in <span>StreamBase
+                Studio</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1" compact>
+            <li class="listitem">
+              <p>
+                In the Package Explorer, open the <code class="filename">sample_operator</code>
+                project folder.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Double-click to open the <code class="filename">ExtPtDeploymnent1.sbdeploy</code>
+                deployment file. Make sure the Deployment File Editor is the currently active tab
+                in Studio.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click the <span class="guilabel">Run</span> button. This opens the SB Test/Debug
+                perspective and starts the application module named in the deployment file.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Application Output view, select the <code class="literal">Output</code>
+                output stream. No output is displayed at this point.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Manual Input view, select the <code class="literal">Input</code> input
+                stream.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter the following field values:
+              </p>
+
+              <div class="informaltable">
+                <table border="1">
+                  <colgroup>
+                    <col width="50%">
+                    <col width="50%">
+                  </colgroup>
+
+                  <thead>
+                    <tr>
+                      <th align="center">
+                        Field
+                      </th>
+                      <th align="center">
+                        Enter this value
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td>
+                        value
+                      </td>
+                      <td>
+                        2
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        action
+                      </td>
+                      <td>
+                        double
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click <span class="guilabel">Send Data</span>, and a tuple arrives in the
+                Application Output view. Select the new tuple and observe this data below the
+                output stream table:
+              </p>
+
+              <pre class="screen">
+value=2, action=double, newValue=4, path=[Entering port 1 for Name dispatch,Doubler.sbapp]
+</pre>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Manual Input view, enter the following field values:
+              </p>
+
+              <div class="informaltable">
+                <table border="1">
+                  <colgroup>
+                    <col width="50%">
+                    <col width="50%">
+                  </colgroup>
+
+                  <thead>
+                    <tr>
+                      <th align="center">
+                        Field
+                      </th>
+                      <th align="center">
+                        Enter this value
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td>
+                        value
+                      </td>
+                      <td>
+                        2
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        action
+                      </td>
+                      <td>
+                        triple
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click <span class="guilabel">Send Data</span>, and a tuple arrives in the
+                Application Output view. Select the new tuple and observe this data below the
+                output stream table:
+              </p>
+
+              <pre class="screen">
+value=2, action=triple, newValue=6, path=[Entering port 1 for Name dispatch,Tripler.sbapp]
+</pre>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Manual Input view, enter the following field values:
+              </p>
+
+              <div class="informaltable">
+                <table border="1">
+                  <colgroup>
+                    <col width="50%">
+                    <col width="50%">
+                  </colgroup>
+
+                  <thead>
+                    <tr>
+                      <th align="center">
+                        Field
+                      </th>
+                      <th align="center">
+                        Enter this value
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td>
+                        value
+                      </td>
+                      <td>
+                        3
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        action
+                      </td>
+                      <td>
+                        null
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click <span class="guilabel">Send Data</span>, and two tuples arrive in the
+                Application Output view. Select the new tuples and observe this data below the
+                output stream table:
+              </p>
+
+              <pre class="screen">
+value=3, action=null, newValue=6, path=[Entering port 2 for Broadcast dispatch,Doubler.sbapp]
+value=3, action=null, newValue=9, path=[Entering port 2 for Broadcast dispatch,Tripler.sbapp]
+</pre>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Press <span class="keycap"><strong>F9</strong></span> or click the <span class=
+                "guilabel">Stop Running Application</span> button to stop the first deployment
+                application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Double-click to open the <code class="filename">ExtPtDeploymnent2.sbdeploy</code>
+                deployment file, and make sure the Deployment File Editor is the currently active
+                tab in Studio.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click the <span class="guilabel">Run</span> button to run this second deployment
+                file. As before, this opens the SB Test/Debug perspective and starts the
+                application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter input tuples in the Manual Input view using steps similar to steps 6 through
+                11, but this time use action values <code class="literal">triple</code>,
+                <code class="literal">quadruple</code>, and <code class="literal">null</code>.
+                Compare the results with running the first deployment file.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                When done, press <span class="keycap"><strong>F9</strong></span> or click the
+                <span class="guilabel">Stop Running Application</span> button to stop the second
+                deployment application.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="ExtPtDeployment_running-terminals" id=
+                "ExtPtDeployment_running-terminals"></a>Running This Sample in Terminal Windows
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          This section describes how to run the sample in UNIX terminal windows or Windows command
+          prompt windows. On Windows, be sure to use the <span><span>StreamBase</span> Command
+          Prompt</span> from the Start menu as described in the <em class="citetitle">Test/Debug
+          Guide</em>, not the default command prompt.
+        </p>
+
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1" compact>
+            <li class="listitem">
+              <p>
+                Open three terminal windows on UNIX, or three <span><span>StreamBase</span> Command
+                Prompt</span>s on Windows. In each window, navigate to your workspace copy of the
+                sample, as described above.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 1, start <span>StreamBase Server</span> running the first deployment
+                file. You must specify the provided server configuration file so that the
+                application can locate the provided interface and module files in the <code class=
+                "filename">Modules</code> folder. Enter:
+              </p>
+
+              <pre class="programlisting">
+sbd -f op-samples.sbconf ExtPtDeployment1.sbdeploy
+</pre>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 2, type:
+              </p>
+
+              <pre class="programlisting">
+sbc deq Output
+</pre>
+              <p>
+                No output is displayed at this point, but the dequeuer is prepared to receive
+                output.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type:
+              </p>
+
+              <pre class="programlisting">
+sbc enq Input
+</pre>
+              <p>
+                The <span class="command"><strong>sbc</strong></span> command in window 3 now waits
+                for keyboard input. Type:
+              </p>
+
+              <pre class="programlisting">
+2, double
+2, triple
+3, null
+</pre>
+              <p>
+                Look for output lines like the following in window 2:
+              </p>
+
+              <pre class="screen">
+2,double,4,"[Entering port 1 for Name dispatch,Doubler.sbapp]"
+2,triple,6,"[Entering port 1 for Name dispatch,Tripler.sbapp]"
+3,null,6,"[Entering port 2 for Broadcast dispatch,Doubler.sbapp]"
+3,null,9,"[Entering port 2 for Broadcast dispatch,Tripler.sbapp]"
+</pre>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type: <span class="keycap"><strong>Ctrl</strong></span>+<span class=
+                "keycap"><strong>C</strong></span> to exit the <span class=
+                "command"><strong>sbc</strong></span> session.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type the following command to terminate the server and dequeuer:
+                <strong class="userinput"><code>sbadmin&nbsp;shutdown</code></strong>
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Now, in window 1, run the second deployment file:
+              </p>
+
+              <pre class="programlisting">
+sbd -f op-samples.sbconf ExtPtDeployment2.sbdeploy
+</pre>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 2, type:
+              </p>
+
+              <pre class="programlisting">
+sbc deq Output
+</pre>
+              <p>
+                No output is displayed at this point, but the dequeuer is prepared to receive
+                output. This window will eventually show the output of the application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type:
+              </p>
+
+              <pre class="programlisting">
+sbc enq Input
+</pre>
+              <p>
+                The <span class="command"><strong>sbc</strong></span> command in window 3 now waits
+                for keyboard input. Type:
+              </p>
+
+              <pre class="programlisting">
+2, triple
+2, quadruple
+3, null
+</pre>
+              <p>
+                Look for output lines like the following in window 2:
+              </p>
+
+              <pre class="screen">
+2,triple,6,"[Entering port 1 for Name dispatch,Tripler.sbapp]"
+2,quadruple,8,"[Entering port 1 for Name dispatch,Quadrupler.sbapp]"
+3,null,9,"[Entering port 2 for Broadcast dispatch,Tripler.sbapp]"
+3,null,12,"[Entering port 2 for Broadcast dispatch,Quadrupler.sbapp]"
+</pre>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type: <span class="keycap"><strong>Ctrl</strong></span>+<span class=
+                "keycap"><strong>C</strong></span> to exit the <span class=
+                "command"><strong>sbc</strong></span> session.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type the following command to terminate the server and dequeuer:
+                <strong class="userinput"><code>sbadmin&nbsp;shutdown</code></strong>
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e11690" id="d0e11690"></a>Sample Location
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          When you load the sample into StreamBase Studio, Studio copies the sample's files to a
+          project folder in your Studio workspace directory. Because the Studio workspace location
+          is normally part of your home directory, you have full access rights there by default.
+        </p>
+
+        <div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <h3 class="title">
+            Important
+          </h3>
+
+          <p>
+            Load this sample in StreamBase Studio, and thereafter use the Studio workspace copy of
+            the sample to run and test it, even when running from the command prompt.
+          </p>
+        </div>
+
+        <p>
+          Using the workspace copy of the sample avoids the permission problems that can occur when
+          trying to work with the initially installed location of the sample. The default workspace
+          location for this sample is:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>studio-workspace</code></em>/sample_operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the <span><span>location</span></span> of <em class=
+          "replaceable"><code>studio-workspace</code></em> on your system.
+        </p>
+
+        <p>
+          In the default TIBCO StreamBase installation, this sample's files are initially installed
+          in:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>streambase-install-dir</code></em>/sample/operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the location of <em class=
+          "replaceable"><code>streambase-install-dir</code></em> on your system. This location may
+          require administrator privileges for write access, depending on your platform.
+        </p>
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>
+        Copyright © 2004-2015 TIBCO Software Inc. All rights reserved.
+      </p>
+    </div>
+  </body>
+</html>

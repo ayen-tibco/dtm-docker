@@ -1,0 +1,749 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>
+      Operator Sample Group
+    </title>
+    <link rel="stylesheet" type="text/css" href="''">
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+    <style type="text/css">
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    sb-readme.css : Styles for StreamBase Help READMEs
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    body {
+    background: #fff;
+    text-align: left;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    padding: 10px;  
+    margin: 0;
+    }
+
+    h1 {
+    color: black;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 0.75em 0px;
+    }
+
+    h2 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 130%;
+    font-weight: bold;
+    border-top: 0.5px solid gray; 
+    }
+
+    h3 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 120%;
+    font-style: italic;
+    font-weight: bold;
+    width: 50%;
+    border-top: 1px dashed;
+    }
+
+    h3.subtitle {
+    color: black;
+    text-align: center;
+    border: none;
+    margin: -1.25em 0 1em 0;
+    padding: none;
+    font-size: 120%;
+    font-weight: bold;
+    font-style: normal;
+    width: 100%;
+    }
+
+    h4 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 110%;
+    font-weight: bold;
+    }
+
+    h5 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-style: italic;
+    }
+
+    h6 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-weight: bold;
+    }
+
+    table {
+    border-collapse: collapse;
+    border-left: 1px solid gray;
+    border-top: 1px solid gray;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    }
+
+    table.simplelist {
+    border: none;
+    }
+
+    thead {
+    line-height: 1em;
+    }
+
+    th {
+    background: #ddeeff;
+    text-align: left;
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    td {
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    table p {
+    margin-bottom: 2px;
+    margin-top: 3px;
+    }
+
+    ul, ol {
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+    margin-left: 1.5em;
+    padding: 0 0 0 20px;
+    }
+
+    li {
+    margin-top: 0;
+    margin-bottom: 0;    
+    }
+
+    ol[compact] li p, ul[compact] li p {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+    }
+
+    li p {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    }
+
+    div.variablelist {
+    margin-left: 2em;
+    }
+
+    dt {
+    font-size: 95%;
+    font-weight: bold;
+    margin-top: 8.0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    dd {
+    margin-left: 1em;
+    }
+
+    div.column dt {
+    font-size: 95%;
+    font-weight: normal;
+    margin-top: 0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    img {
+    border: none;
+    }
+
+    blockquote {
+    margin: 0 0 0 2em;
+    padding: 5px 0;
+    }
+
+    span {
+    margin: 0;
+    padding: 0;
+    }
+
+    a {
+    margin: 0;
+    padding: 0;
+    }
+
+    a:link, a:visited {
+    color: #003399;
+    }
+
+    a:hover {
+    color: #ff0000;
+    }
+
+    span.guilabel, 
+    span.guimenuitem, 
+    span.guibutton {
+    font-weight: bold;
+    color: #333333;
+    }
+
+    .column { 
+    padding: 2px; 
+    }
+
+    *.box {
+    border: 1px solid blue;
+    margin: 10px;
+    background: #def;
+    }
+
+    *.box *.title{
+    margin-top: 0;
+    }
+
+    *.box * {
+    margin-left: 1em;
+    }
+
+    div.back2top {
+    margin-top: 30px;
+    }
+
+    div.literallayout p {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    div.note *.title,
+    div.important *.title,
+    div.caution *.title,
+    div.tip *.title,
+    div.warning *.title {
+    margin: 0em 0em -0.85em 0em;
+    font-size: 90%;
+    }
+
+    li div.note *.title, 
+    li div.important *.title, 
+    li div.caution *.title, 
+    li div.tip *.title, 
+    li div.warning *.title {
+    margin: 0em 0em -0.2em 0em;
+    font-size: 90%;
+    }
+
+    table div.note *.title,
+    table div.important *.title,
+    table div.caution *.title,
+    table div.tip *.title,
+    table div.warning *.title {
+    margin: 0em 0em -0.5em 0em;
+    font-size: 90%;
+    }
+
+    pre.programlisting {
+    border: 1.0px solid gray;
+    padding: 2px;
+    background: #EEE;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    pre.programlisting em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    pre.screen {
+    border: 1px solid gray;
+    padding: 2px;
+    background: #FBFFFF;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attribute, code.sgmltag-element, code.sgml-emptytag, code.function, 
+    code.type, code.exceptionname, code.parameter, code.varname, code.interfacename, 
+    code.oointerface, code.classname, code.ooclass, code.methodname, code.coexception,
+    code.command, code.option, code.filename, code.literal, code.uri, code.constant,
+    code.methodsynopsis, pre.classsynopsis, span.type, span.markup 
+    {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attvalue, 
+    code.filename em.replaceable, 
+    code.literal  em.replaceable, 
+    code.filename em.replaceable code,
+    code.literal  em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    em.replaceable {
+    font-style: italic;
+    }
+
+    code.sgmltag-element:before {
+    content:'<';
+    }
+
+    code.sgmltag-element:after {
+    content:'>';
+    } 
+
+    h2 code.sgmltag-element, h3 code.sgmltag-element, h4 code.sgmltag-element {
+    font-family: inherit; 
+    }
+
+    strong.command, strong.keycap {
+    color: #333333;
+    }
+
+    strong.userinput {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #e0e0e0;
+    }
+
+    p.nospaceabove {
+    margin-top: -1.0em;
+    }
+
+    div#header {
+    margin: 0;
+    padding-bottom: 0;
+    text-align: left;
+    font-size : 90%;
+    }
+
+    p#readmebanner {
+    font-size: 100%;
+    font-weight: bold;
+    text-align: center;
+    color: navy;
+    border-bottom: 1px solid #333;
+    }
+
+    div.toc dt {
+    font-weight: normal;
+    line-height: 1em;
+    margin-top: 0;
+    margin-bottom: 0.35em;
+    }
+
+    div.article>div.section, div.preface>div.section {
+    padding: 0 10px 0 10px;
+    }
+
+    div#footer {
+    padding-left: 0;
+    border-top: 1px solid #333;
+    font-size: 90%;
+    margin-top: 18pt;
+    }
+
+    div#footer p {
+    margin-top: 0;
+    }
+
+    </style>
+  </head>
+  <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+    <a name="_top"></a>
+    <div id="header">
+    </div>
+
+    <div id="subPageMasthead">
+      <p id="readmebanner">
+        StreamBase Documentation
+      </p>
+    </div>
+
+    <div class="part">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title">
+              <a name="operators-overview" id="operators-overview"></a>Operator Sample Group
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="partintro">
+        <p>
+          The <code class="literal">operator</code> sample group provides one small EventFlow
+          application for each operator and most data constructs in the Palette view in
+          <span>StreamBase Studio</span>. <span>Scroll through the Package Explorer to locate the
+          sample named for the operator of interest.</span>
+        </p>
+
+        <div class="itemizedlist">
+          <ul class="itemizedlist" type="disc" compact>
+            <li class="listitem">
+              <p>
+                An <span class="bold"><strong>operator</strong></span> is a <span>StreamBase</span>
+                processing unit that performs predefined work on streaming data, such as
+                aggregating windows of data streams, merging streams, or retrieving shared data
+                from a table.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                A <span class="bold"><strong>data construct</strong></span> is a component that can
+                store information from a stream or from an external data source that can then be
+                used by an associated <span>StreamBase</span> operator.
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          Each sample has a separate README that describes the steps to run that sample.
+        </p>
+
+        <div class="informaltable">
+          <table border="1">
+            <colgroup>
+              <col width="27%" class="c1">
+              <col width="73%" class="c2">
+            </colgroup>
+
+            <thead>
+              <tr>
+                <th align="center">
+                  Component Sample
+                </th>
+                <th align="center">
+                  Description
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>
+                  <a class="ulink" href="AggregateByTime_README.html" target="_top">Aggregate
+                  Operator: Time Dimension Sample</a>
+                </td>
+                <td>
+                  Demonstrates an <span>Aggregate operator</span> using a time-based dimension.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="AggregateByTup_README.html" target="_top">Aggregate
+                  Operator: Tuple Dimension Sample</a>
+                </td>
+                <td>
+                  Demonstrates an <span>Aggregate operator</span> using a tuple-based dimension.
+                  Calculates a moving average of price for each of four successive trades of a
+                  given stock.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="AggregateByField_README.html" target="_top">Aggregate
+                  Operator: Field Dimension Sample</a>
+                </td>
+                <td>
+                  Demonstrates an <span>Aggregate operator</span> using a field-based dimension.
+                  Sums the volume of trades in a particular stock over 30-second windows, advancing
+                  every 30 seconds.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="AggregateByPredicate_README.html" target="_top">Aggregate
+                  Operator: Predicate Dimension Sample</a>
+                </td>
+                <td>
+                  Demonstrates an <span>Aggregate operator</span> with a predicate-based dimension.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="AggregateByDim_README.html" target="_top">Aggregate
+                  Operator: Two-Dimension Sample</a>
+                </td>
+                <td>
+                  Demonstrates an <span>Aggregate operator</span> with two dimensions.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Bsort_README.html" target="_top">BSort Operator Sample</a>
+                </td>
+                <td>
+                  Uses a <span>BSort operator</span> to reorder trades by time for an input stream
+                  where trades arrive in random order. It is instructive to compare the results of
+                  running this application with two passes versus six passes.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="ExtensionPoint_README.html" target="_top">Extension Point
+                  Operator Sample</a>
+                </td>
+                <td>
+                  This sample uses an <span>Extension Point operator</span> to dispatch tuples
+                  based on a user-specified action to one of two modules, which double or triple an
+                  integer field within the tuple. If no action is specified, the tuple is sent to
+                  both modules. This sample illustrates <span>StreamBase</span> interfaces used
+                  with the Extension Point operator, and illustrates <span>module dispatch</span>
+                  based on a predicate condition.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="ExtensionPoint_README.html" target="_top">Extension Point
+                  Deployment Sample</a>
+                </td>
+                <td>
+                  This sample is a variation on the Extension Point operator sample to illustrate
+                  the use of <span>StreamBase</span> deployment files. The <span>StreamBase</span>
+                  interface in this sample specifies externally defined modules. Two example
+                  <code class="filename">.sbdeploy</code> files are provided, which you use to run
+                  this sample.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Filter_README.html" target="_top">Filter Operator
+                  Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Filter operator</span> to pass only trades of 10,000 shares or more.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Gather_README.html" target="_top">Gather Operator
+                  Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Gather operator</span> to generate an alarm (a "true") for trades of
+                  10,000 shares or more for a stock whose price is $200 or greater.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="HeartbeatAggregate_README.html" target="_top">Heartbeat
+                  Aggregate Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Heartbeat operator</span> to output the number of stock quotes
+                  received every five seconds. The actual counting is done by an Aggregate
+                  operator, but it relies on the Heartbeat to trigger output during periods when no
+                  quotes are received.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="HeartbeatMerge_README.html" target="_top">Heartbeat Merge
+                  Sample</a>
+                </td>
+                <td>
+                  Uses two <span>Heartbeat operators</span> to prevent a <span>Merge
+                  operator</span> from starving when either of its inputs stop receiving tuples.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Iterate_README.html" target="_top">Iterate Operator
+                  Sample</a>
+                </td>
+                <td>
+                  Uses an Aggregate operator and the <code class="function">aggregatelist()</code>
+                  expression language function to aggregate incoming tuples and collect them into
+                  three-element lists of tuples, so that every list output contains three input
+                  tuples of the same stock. An <span>Iterate operator</span> then takes these
+                  lists, extracts their component tuples, and feeds them to a Map operator, which
+                  reorders the output fields.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Join_README.html" target="_top">Join Operator Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Join operator</span> to combine trades from a Reuters data feed and
+                  a feed from Interactive Data PlusFeed (formerly Comstock), where the stocks are
+                  the same and the price per share is greater than or equal to $1, over a period of
+                  60 seconds.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="LockUnlock_README.html" target="_top">Lock and Unlock
+                  Operators Sample</a>
+                </td>
+                <td>
+                  Uses paired <span>Lock</span> and <span>Unlock</span> operators to protect shared
+                  data against concurrent writes. The sample is intended only to demonstrate how to
+                  protect the data, and does not include other concurrent operations which might
+                  access the data. Other concurrent operations could derive from data on different
+                  streams sharing the <span>Query Table</span>, or they could be generated by
+                  tuples on the same stream, which would have to wait for the tuple being protected
+                  by the Lock clearing the Unlock. (There would be additional operators between the
+                  Lock and Unlock operator to process the data.) This example uses the same key for
+                  both the key into the Query Table and the key on which to lock for exclusive
+                  access.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Map_README.html" target="_top">Map Operator Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Map operator</span> to accept tuples from a comma-separated list,
+                  and demonstrates the use of the Map operator to reorder and drop output fields,
+                  as well as calculate new output fields.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Merge_README.html" target="_top">Merge Operator Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Merge operator</span> to interlace trades from a Reuters data feed
+                  and a feed from Interactive Data PlusFeed (formerly Comstock), based on trade
+                  time.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Metronome_README.html" target="_top">Metronome Operator
+                  Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Metronome operator</span> to output the current share price of all
+                  stocks every five seconds. The current prices are stored in a <span>Query
+                  Table</span>.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Pattern_README.html" target="_top">Pattern Operator
+                  Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Pattern operator</span> to pass through only market data for
+                  securities that have already been traded.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Query_README.html" target="_top">Query Operator Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Query Table</span> data construct and <span>Query operators</span>
+                  to provide lookup capabilities for the name and description of a stock in the
+                  NASDAQ-100 index, given its symbol.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Query_README.html" target="_top">Query Operator, Index by
+                  Expression Sample</a>
+                </td>
+                <td>
+                  Illustrates the Query Table's index by expression feature. This feature allows
+                  you to use an expression as part of specifying the field or fields that comprise
+                  a secondary index for a Query Table.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="QueryTopN_README.html" target="_top">Query TopN Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Query operator</span> to retrieve the first <em class=
+                  "replaceable"><code>n</code></em> rows in a b-tree-indexed <span>Query
+                  Table</span>, processing output with Aggregate and Map operators to output the
+                  top <em class="replaceable"><code>n</code></em> values as a list and as separate
+                  tuples.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Sequence_README.html" target="_top">Sequence Operator
+                  Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Sequence operator</span> to generate unique ID numbers for generic
+                  product orders, allowing for easy querying when updating orders.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Split_README.html" target="_top">Split Operator Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Split operator</span> to explicitly declare the order in which
+                  copies of a tuple are processed by downstream components. This type of
+                  configuration is seen when a component has a single output port, with multiple
+                  output arcs connected to separate downstream paths.
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="ulink" href="Union_README.html" target="_top">Union Operator Sample</a>
+                </td>
+                <td>
+                  Uses a <span>Union operator</span> to interlace trades from a Reuters data feed
+                  and a feed from Interactive Data PlusFeed (formerly Comstock).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>
+        Copyright © 2004-2015 TIBCO Software Inc. All rights reserved.
+      </p>
+    </div>
+  </body>
+</html>

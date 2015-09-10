@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <stream name="SimpleBuySellMatch">
+            <property name="description" value="Send a Buy and a Sell signal for the same symbol, within 10 seconds, and the Gather operator DoMatch will match them. DoMatch is configured to time out after 10 seconds of a symbol match isn't found (meaning that it did not receive a tuple with the same symbol on all its input ports)."/>
+            <schema>
+                <field description="Buy or Sell" name="Type" type="string"/>
+                <field name="Symbol" type="string"/>
+            </schema>
+            <param name="gui:x" value="164"/>
+            <param name="gui:y" value="374"/>
+        </stream>
+        <stream name="TradesIn">
+            <schema>
+                <field name="Symbol" type="string"/>
+                <field name="Volume" type="int"/>
+                <field name="Price" type="double"/>
+            </schema>
+            <param name="gui:x" value="84"/>
+            <param name="gui:y" value="183"/>
+        </stream>
+        <box name="Side" type="filter">
+            <input port="1" stream="SimpleBuySellMatch"/>
+            <output port="1" stream="out:Side_1"/>
+            <output port="2" stream="out:Side_2"/>
+            <param name="autogen-nomatch-port" value="false"/>
+            <param name="expression.0" value="Type == &quot;Buy&quot;"/>
+            <param name="expression.1" value="Type == &quot;Sell&quot;"/>
+            <param name="gui:x" value="276"/>
+            <param name="gui:y" value="374"/>
+        </box>
+        <box name="TradeID" type="seqnum">
+            <input port="1" stream="TradesIn"/>
+            <output port="1" stream="out:TradeID_1"/>
+            <param name="output-field" value="TradeID"/>
+            <param name="sequence-id" value="sequenceid"/>
+            <param name="update-expression" value="sequenceid + 1"/>
+            <param name="gui:x" value="196"/>
+            <param name="gui:y" value="183"/>
+        </box>
+        <box name="Gather" type="gather">
+            <input port="1" stream="out:Side_1"/>
+            <input port="2" stream="out:Side_2"/>
+            <output port="1" stream="Matches"/>
+            <target-list>
+                <item name="input1" prefix="input1_" selection="none"/>
+                <item name="input2" prefix="input2_" selection="none"/>
+                <expressions>
+                    <include field="MatchedSymbol">if (!isnull(input1.Symbol) &amp;&amp; !isnull(input2.Symbol)) then input1.Symbol else ("&lt;No Match: "+join(",",list(input1.Symbol,input2.Symbol))+"&gt;")</include>
+                </expressions>
+            </target-list>
+            <param name="key-field" value="Symbol"/>
+            <param name="output-last-time-field" value="false"/>
+            <param name="emit-on-completion" value="true"/>
+            <param name="replacement-type" value="keep_last"/>
+            <param name="wall-timeout" value="10"/>
+            <param name="gui:x" value="390"/>
+            <param name="gui:y" value="374"/>
+        </box>
+        <box name="PriceAlarm" type="map">
+            <input port="1" stream="out:TradeID_1"/>
+            <output port="1" stream="out:PriceAlarm_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="PriceAlarm">Price &gt;= 200.0</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="320"/>
+            <param name="gui:y" value="229"/>
+        </box>
+        <box name="VolAlarm" type="map">
+            <input port="1" stream="out:TradeID_1"/>
+            <output port="1" stream="out:VolAlarm_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="VolAlarm">Volume &gt;= 10000</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="320"/>
+            <param name="gui:y" value="134"/>
+        </box>
+        <output-stream name="Matches">
+            <param name="gui:x" value="504"/>
+            <param name="gui:y" value="374"/>
+        </output-stream>
+        <box name="GatherAlarms" type="gather">
+            <input port="1" stream="out:VolAlarm_1"/>
+            <input port="2" stream="out:PriceAlarm_1"/>
+            <output port="1" stream="BigTradeAlarm"/>
+            <target-list>
+                <item name="input1" prefix="input1_" selection="none"/>
+                <item name="input2" prefix="input2_" selection="none"/>
+                <expressions>
+                    <include field="BigTradeAlarm">VolAlarm &amp;&amp; PriceAlarm</include>
+                </expressions>
+            </target-list>
+            <param name="key-field" value="TradeID"/>
+            <param name="output-last-time-field" value="false"/>
+            <param name="emit-on-completion" value="true"/>
+            <param name="replacement-type" value="keep_last"/>
+            <param name="gui:x" value="434"/>
+            <param name="gui:y" value="180"/>
+            <param name="gui:height" value="64"/>
+            <param name="gui:bends:1" value="410,164;418,200"/>
+            <param name="gui:bends:2" value="397,259;405,224"/>
+        </box>
+        <output-stream name="BigTradeAlarm">
+            <param name="gui:x" value="534"/>
+            <param name="gui:y" value="182"/>
+        </output-stream>
+        <gui.group layout-locked="false" name="SimpleGather" visual-state="open">
+            <member name="VolAlarm"/>
+            <member name="TradesIn"/>
+            <member name="GatherAlarms"/>
+            <member name="BigTradeAlarm"/>
+            <member name="TradeID"/>
+            <member name="PriceAlarm"/>
+            <param name="gui:x" value="62"/>
+            <param name="gui:y" value="100"/>
+            <param name="gui:width" value="571"/>
+            <param name="gui:height" value="227"/>
+        </gui.group>
+        <gui.group color="102,255,102" layout-locked="false" name="TimeoutGather" visual-state="open">
+            <member name="Side"/>
+            <member name="SimpleBuySellMatch"/>
+            <member name="Gather"/>
+            <member name="Matches"/>
+            <param name="gui:x" value="110"/>
+            <param name="gui:y" value="340"/>
+            <param name="gui:width" value="476"/>
+            <param name="gui:height" value="132"/>
+        </gui.group>
+    </add>
+</modify>

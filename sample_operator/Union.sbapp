@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <named-schemas>
+            <schema name="FeedSchema">
+                <field name="Symbol" type="string"/>
+                <field name="PricePS" type="double"/>
+                <field name="Time" type="int"/>
+                <field name="FeedID" type="int"/>
+            </schema>
+        </named-schemas>
+        <stream name="ComstockIn" schema="FeedSchema">
+            <param name="gui:x" value="116"/>
+            <param name="gui:y" value="112"/>
+        </stream>
+        <stream name="ReutersIn" schema="FeedSchema">
+            <param name="gui:x" value="116"/>
+            <param name="gui:y" value="13"/>
+        </stream>
+        <box name="myUnion" type="union">
+            <input port="1" stream="ReutersIn"/>
+            <input port="2" stream="ComstockIn"/>
+            <output port="1" stream="UnionOut"/>
+            <param name="strict" value="false"/>
+            <param name="gui:x" value="229"/>
+            <param name="gui:y" value="62"/>
+            <param name="gui:bends:1" value="187,43;195,82"/>
+            <param name="gui:bends:2" value="199,142;209,102"/>
+        </box>
+        <output-stream name="UnionOut">
+            <param name="gui:x" value="308"/>
+            <param name="gui:y" value="62"/>
+        </output-stream>
+    </add>
+</modify>

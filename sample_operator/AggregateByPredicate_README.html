@@ -1,0 +1,843 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>
+      Aggregate Operator Predicate Dimension Sample
+    </title>
+    <link rel="stylesheet" type="text/css" href="''">
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+    <style type="text/css">
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    sb-readme.css : Styles for StreamBase Help READMEs
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    body {
+    background: #fff;
+    text-align: left;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    padding: 10px;  
+    margin: 0;
+    }
+
+    h1 {
+    color: black;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 0.75em 0px;
+    }
+
+    h2 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 130%;
+    font-weight: bold;
+    border-top: 0.5px solid gray; 
+    }
+
+    h3 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 120%;
+    font-style: italic;
+    font-weight: bold;
+    width: 50%;
+    border-top: 1px dashed;
+    }
+
+    h3.subtitle {
+    color: black;
+    text-align: center;
+    border: none;
+    margin: -1.25em 0 1em 0;
+    padding: none;
+    font-size: 120%;
+    font-weight: bold;
+    font-style: normal;
+    width: 100%;
+    }
+
+    h4 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 110%;
+    font-weight: bold;
+    }
+
+    h5 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-style: italic;
+    }
+
+    h6 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-weight: bold;
+    }
+
+    table {
+    border-collapse: collapse;
+    border-left: 1px solid gray;
+    border-top: 1px solid gray;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    }
+
+    table.simplelist {
+    border: none;
+    }
+
+    thead {
+    line-height: 1em;
+    }
+
+    th {
+    background: #ddeeff;
+    text-align: left;
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    td {
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    table p {
+    margin-bottom: 2px;
+    margin-top: 3px;
+    }
+
+    ul, ol {
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+    margin-left: 1.5em;
+    padding: 0 0 0 20px;
+    }
+
+    li {
+    margin-top: 0;
+    margin-bottom: 0;    
+    }
+
+    ol[compact] li p, ul[compact] li p {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+    }
+
+    li p {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    }
+
+    div.variablelist {
+    margin-left: 2em;
+    }
+
+    dt {
+    font-size: 95%;
+    font-weight: bold;
+    margin-top: 8.0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    dd {
+    margin-left: 1em;
+    }
+
+    div.column dt {
+    font-size: 95%;
+    font-weight: normal;
+    margin-top: 0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    img {
+    border: none;
+    }
+
+    blockquote {
+    margin: 0 0 0 2em;
+    padding: 5px 0;
+    }
+
+    span {
+    margin: 0;
+    padding: 0;
+    }
+
+    a {
+    margin: 0;
+    padding: 0;
+    }
+
+    a:link, a:visited {
+    color: #003399;
+    }
+
+    a:hover {
+    color: #ff0000;
+    }
+
+    span.guilabel, 
+    span.guimenuitem, 
+    span.guibutton {
+    font-weight: bold;
+    color: #333333;
+    }
+
+    .column { 
+    padding: 2px; 
+    }
+
+    *.box {
+    border: 1px solid blue;
+    margin: 10px;
+    background: #def;
+    }
+
+    *.box *.title{
+    margin-top: 0;
+    }
+
+    *.box * {
+    margin-left: 1em;
+    }
+
+    div.back2top {
+    margin-top: 30px;
+    }
+
+    div.literallayout p {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    div.note *.title,
+    div.important *.title,
+    div.caution *.title,
+    div.tip *.title,
+    div.warning *.title {
+    margin: 0em 0em -0.85em 0em;
+    font-size: 90%;
+    }
+
+    li div.note *.title, 
+    li div.important *.title, 
+    li div.caution *.title, 
+    li div.tip *.title, 
+    li div.warning *.title {
+    margin: 0em 0em -0.2em 0em;
+    font-size: 90%;
+    }
+
+    table div.note *.title,
+    table div.important *.title,
+    table div.caution *.title,
+    table div.tip *.title,
+    table div.warning *.title {
+    margin: 0em 0em -0.5em 0em;
+    font-size: 90%;
+    }
+
+    pre.programlisting {
+    border: 1.0px solid gray;
+    padding: 2px;
+    background: #EEE;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    pre.programlisting em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    pre.screen {
+    border: 1px solid gray;
+    padding: 2px;
+    background: #FBFFFF;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attribute, code.sgmltag-element, code.sgml-emptytag, code.function, 
+    code.type, code.exceptionname, code.parameter, code.varname, code.interfacename, 
+    code.oointerface, code.classname, code.ooclass, code.methodname, code.coexception,
+    code.command, code.option, code.filename, code.literal, code.uri, code.constant,
+    code.methodsynopsis, pre.classsynopsis, span.type, span.markup 
+    {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attvalue, 
+    code.filename em.replaceable, 
+    code.literal  em.replaceable, 
+    code.filename em.replaceable code,
+    code.literal  em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    em.replaceable {
+    font-style: italic;
+    }
+
+    code.sgmltag-element:before {
+    content:'<';
+    }
+
+    code.sgmltag-element:after {
+    content:'>';
+    } 
+
+    h2 code.sgmltag-element, h3 code.sgmltag-element, h4 code.sgmltag-element {
+    font-family: inherit; 
+    }
+
+    strong.command, strong.keycap {
+    color: #333333;
+    }
+
+    strong.userinput {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #e0e0e0;
+    }
+
+    p.nospaceabove {
+    margin-top: -1.0em;
+    }
+
+    div#header {
+    margin: 0;
+    padding-bottom: 0;
+    text-align: left;
+    font-size : 90%;
+    }
+
+    p#readmebanner {
+    font-size: 100%;
+    font-weight: bold;
+    text-align: center;
+    color: navy;
+    border-bottom: 1px solid #333;
+    }
+
+    div.toc dt {
+    font-weight: normal;
+    line-height: 1em;
+    margin-top: 0;
+    margin-bottom: 0.35em;
+    }
+
+    div.article>div.section, div.preface>div.section {
+    padding: 0 10px 0 10px;
+    }
+
+    div#footer {
+    padding-left: 0;
+    border-top: 1px solid #333;
+    font-size: 90%;
+    margin-top: 18pt;
+    }
+
+    div#footer p {
+    margin-top: 0;
+    }
+
+    </style>
+  </head>
+  <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+    <a name="_top"></a>
+    <div id="header">
+    </div>
+
+    <div id="subPageMasthead">
+      <p id="readmebanner">
+        StreamBase Documentation
+      </p>
+    </div>
+
+    <div class="article">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title">
+              <a name="AggregateByPredicate" id="AggregateByPredicate"></a>Aggregate Operator
+              Predicate Dimension Sample
+            </h1>
+          </div>
+        </div>
+      </div>
+      <a class="ix" name="Aggregate operator, predicate dimension sample"></a>
+      <p>
+        This topic describes how to run <code class="filename">AggregateByPredicate.sbapp</code>, a
+        sample application that contains an Aggregate operator with a predicate-based dimension.
+        For detailed information about this and other Aggregate operator samples, see the
+        <em class="citetitle">Samples Guide</em> in the <span>StreamBase Studio</span> Help.
+      </p>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="AggregateByPredicate_runningthesample" id=
+                "AggregateByPredicate_runningthesample"></a>Running the Aggregate Predicate-Based
+                Sample
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          This sample demonstrates use of the predicate-based Aggregate operator. The
+          predicate-based aggregate uses Boolean strings sent to a control port to open, emit from,
+          and close aggregate windows. Data entered on the <code class="literal">TradesIn</code>
+          port are not processed until true is sent to the <code class="literal">EmitWindow</code>
+          or <code class="literal">CloseWindow</code> field of the control port, or both.
+        </p>
+
+        <p>
+          The following table lists the predicate expressions entered in the three predicate
+          dimension fields of the Edit Dimension dialog for this sample.
+        </p>
+
+        <div class="informaltable">
+          <table border="1">
+            <colgroup>
+              <col width="42%" class="c1">
+              <col width="58%" class="c2">
+            </colgroup>
+
+            <thead>
+              <tr>
+                <th align="center">
+                  Predicate Field
+                </th>
+                <th align="center">
+                  Expression Entered
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>
+                  Open a window in the current group when
+                </td>
+                <td>
+                  input1.OpenWindow
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  For windows in the current group, Emit if
+                </td>
+                <td>
+                  input1.EmitWindow || input1.CloseWindow
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  For windows in the current group, Close if
+                </td>
+                <td>
+                  input1.CloseWindow
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          The <code class="literal">input1</code> in these expressions refers to input port 1 of
+          the Aggregate operator. In this sample's case, a Union operator precedes the input port
+          of the Aggregate operator, which combines two input streams, <code class=
+          "literal">WindowControl</code> and <code class="literal">TradesIn</code>. You send tuples
+          to the <code class="literal">WindowControl</code> stream to open, emit, or close windows.
+          <code class="literal">OpenWindow</code>, <code class="literal">EmitWindow</code>, and
+          <code class="literal">CloseWindow</code> are all fields of type bool in the schema of the
+          <code class="literal">WindowControl</code> stream. So you need only send <code class=
+          "literal">true</code> or <code class="literal">false</code> to one or more of these ports
+          to cause a window control action.
+        </p>
+
+        <p>
+          Thus, opening an aggregate window is a matter of sending a tuple containing <code class=
+          "literal">true</code> in the <code class="literal">OpenWindow</code> field of the
+          <code class="literal">WindowControl</code> port. With a window open, you can now send
+          tuples to the <code class="literal">TradesIn</code> stream. However, a computation based
+          on the input trade values is not emitted from the window until you send a tuple
+          containing true to the <code class="literal">EmitWindow</code> field of the <code class=
+          "literal">WindowControl</code> port.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="Aggregate_runninginstudio" id="Aggregate_runninginstudio"></a>Running
+                AggregateByPredicate.sbapp in <span>StreamBase Studio</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1" compact>
+            <li class="listitem">
+              <p>
+                In the Package Explorer, double-click to open the <code class=
+                "filename">AggregateByPredicate.sbapp</code> application. Make sure the application
+                is the currently active tab in the EventFlow Editor.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click the <span class="guilabel">Run</span> button. This opens the SB Test/Debug
+                perspective and starts the application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                No output is displayed in the Application Output view yet, but the dequeuer is
+                prepared to receive output. This view will eventually show the output of the
+                application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Manual Input view, select the <code class="literal">WindowControl</code>
+                stream from the <span class="guilabel">Input stream</span> drop-down list.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the <code class="literal">OpenWindow</code> field, type <code class=
+                "literal">true</code>, then click <span class="guibutton">Send Data</span>.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Select <code class="literal">TradesIn</code> in the <span class="guilabel">Input
+                stream</span> drop-down list.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter several volume and price pairs, clicking <span class="guibutton">Send
+                Data</span> after each pair. For example, enter Volume=1000, Price=39.45. Make up
+                any pairs of numbers and send them to the application. Notice that no output is
+                showing in the Application Output view, but you can see the tuples you are sending
+                by switching to the Application Input view.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the <span class="guilabel">Input stream</span> drop-down, re-select <code class=
+                "literal">WindowControl</code>.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click <span class="guibutton">Clear</span>, then enter <code class=
+                "literal">true</code> in the <code class="literal">EmitWindow</code> field and
+                click <span class="guibutton">Send Data</span>. Notice that a single tuple now
+                appears in the Application Output view, showing the calculated VWAP for the volume
+                and price tuples you sent. (Select the tuple to see it in more detail in the
+                Details pane.)
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Re-select <code class="literal">TradesIn</code> in the <span class="guilabel">Input
+                stream</span> drop-down list, and send several more pairs of volume and price data.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Re-select <code class="literal">WindowControl</code> in the <span class=
+                "guilabel">Input stream</span> drop-down list. Again click <span class=
+                "guibutton">Clear</span>, then enter <code class="literal">true</code> in both the
+                <code class="literal">EmitWindow</code> and <code class=
+                "literal">CloseWindow</code> fields. Click <span class="guilabel">Send Data</span>.
+                Another tuple displays in the Application Output view.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                When done, press <span class="keycap"><strong>F9</strong></span> or click the
+                <span class="guilabel">Stop Running Application</span> button.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="AggregateByPredicate_runninginterminals" id=
+                "AggregateByPredicate_runninginterminals"></a>Running AggregateByPredicate.sbapp in
+                Terminal Windows
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          This section describes how to run the sample in UNIX terminal windows or Windows command
+          prompt windows. On Windows, be sure to use the <span><span>StreamBase</span> Command
+          Prompt</span> from the Start menu as described in the <em class="citetitle">Test/Debug
+          Guide</em>, not the default command prompt.
+        </p>
+
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1" compact>
+            <li class="listitem">
+              <p>
+                Open four terminal windows on UNIX, or four <span><span>StreamBase</span> Command
+                Prompt</span>s on Windows. In each window, navigate to your workspace copy of the
+                sample, as described above.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 1, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbd AggregateByPredicate.sbapp</code></strong>
+              </p>
+
+              <p>
+                The window shows an INFO line reporting that the server is now listening.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 2, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbc dequeue</code></strong>
+              </p>
+
+              <p>
+                No output is displayed at this point, but the dequeuer is prepared to receive
+                output. This window will eventually show the output of the application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbc enq WindowControl</code></strong>
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 4, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbc enq TradesIn</code></strong>
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, send <code class="literal">true</code> to the <code class=
+                "literal">OpenWindow</code> field of the <code class="literal">WindowControl</code>
+                port:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>true,null,null</code></strong>
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 4, send several pairs of volume and price pairs. Use any numbers that
+                come to mind, such as:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>4000,23.45</code></strong>
+              </p>
+
+              <p>
+                <strong class="userinput"><code>5000,45.22</code></strong>
+              </p>
+
+              <p>
+                <strong class="userinput"><code>550,119.55</code></strong>
+              </p>
+
+              <p>
+                <strong class="userinput"><code>4000.45.55</code></strong>
+              </p>
+
+              <p>
+                Notice that no output shows in the dequeue window 2 yet.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, send <code class="literal">true</code> to the <code class=
+                "literal">EmitWindow</code> field of the <code class="literal">WindowControl</code>
+                port:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>null,true,null</code></strong>
+              </p>
+
+              <p>
+                Now you see a tuple in the dequeue window 2.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 4, send several more pairs of volume and price pairs.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, send <code class="literal">true</code> to the <code class=
+                "literal">EmitWindow</code> and <code class="literal">CloseWindow</code> fields of
+                the <code class="literal">WindowControl</code> port:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>null,true,true</code></strong>
+              </p>
+
+              <p>
+                Another tuple shows in the dequeue window 2.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In windows 3 and 4, type <span class=
+                "keycap"><strong>Ctrl</strong></span>+<span class=
+                "keycap"><strong>C</strong></span> to stop the enqueuer. Then type <strong class=
+                "userinput"><code>sbadmin shutdown</code></strong> to terminate the server and the
+                dequeuer.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e9367" id="d0e9367"></a>Sample Location
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          When you load the sample into StreamBase Studio, Studio copies the sample's files to a
+          project folder in your Studio workspace directory. Because the Studio workspace location
+          is normally part of your home directory, you have full access rights there by default.
+        </p>
+
+        <div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <h3 class="title">
+            Important
+          </h3>
+
+          <p>
+            Load this sample in StreamBase Studio, and thereafter use the Studio workspace copy of
+            the sample to run and test it, even when running from the command prompt.
+          </p>
+        </div>
+
+        <p>
+          Using the workspace copy of the sample avoids the permission problems that can occur when
+          trying to work with the initially installed location of the sample. The default workspace
+          location for this sample is:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>studio-workspace</code></em>/sample_operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the <span><span>location</span></span> of <em class=
+          "replaceable"><code>studio-workspace</code></em> on your system.
+        </p>
+
+        <p>
+          In the default TIBCO StreamBase installation, this sample's files are initially installed
+          in:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>streambase-install-dir</code></em>/sample/operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the location of <em class=
+          "replaceable"><code>streambase-install-dir</code></em> on your system. This location may
+          require administrator privileges for write access, depending on your platform.
+        </p>
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>
+        Copyright © 2004-2015 TIBCO Software Inc. All rights reserved.
+      </p>
+    </div>
+  </body>
+</html>

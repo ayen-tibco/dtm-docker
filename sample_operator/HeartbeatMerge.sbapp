@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <named-schemas>
+            <schema name="FeedSchema">
+                <field name="symbol" type="string"/>
+                <field name="price" type="double"/>
+                <field name="time" type="timestamp"/>
+            </schema>
+        </named-schemas>
+        <stream name="Feed1" schema="FeedSchema">
+            <param name="gui:x" value="188"/>
+            <param name="gui:y" value="55"/>
+        </stream>
+        <stream name="Feed2" schema="FeedSchema">
+            <param name="gui:x" value="188"/>
+            <param name="gui:y" value="164"/>
+        </stream>
+        <box name="TagDataTuples1" type="map">
+            <input port="1" stream="Feed1"/>
+            <output port="1" stream="out:TagDataTuples1_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="isDataTuple">true</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="282"/>
+            <param name="gui:y" value="55"/>
+        </box>
+        <box name="TagDataTuples2" type="map">
+            <input port="1" stream="Feed2"/>
+            <output port="1" stream="out:TagDataTuples2_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="isDataTuple">true</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="282"/>
+            <param name="gui:y" value="164"/>
+        </box>
+        <box name="Heartbeat1" type="heartbeat">
+            <input port="1" stream="out:TagDataTuples1_1"/>
+            <output port="1" stream="Feed1WithHeartbeats"/>
+            <param name="interval" value="0.5"/>
+            <param name="slack" value="2"/>
+            <param name="timestamp-field" value="time"/>
+            <param name="gui:x" value="383"/>
+            <param name="gui:y" value="55"/>
+        </box>
+        <box name="Heartbeat2" type="heartbeat">
+            <input port="1" stream="out:TagDataTuples2_1"/>
+            <output port="1" stream="out:Heartbeat2_1"/>
+            <param name="interval" value="0.5"/>
+            <param name="slack" value="2"/>
+            <param name="timestamp-field" value="time"/>
+            <param name="gui:x" value="383"/>
+            <param name="gui:y" value="164"/>
+        </box>
+        <output-stream name="Feed1WithHeartbeats">
+            <param name="gui:x" value="536"/>
+            <param name="gui:y" value="55"/>
+        </output-stream>
+        <box name="Merge1" type="merge">
+            <input port="1" stream="Feed1WithHeartbeats"/>
+            <input port="2" stream="out:Heartbeat2_1"/>
+            <output port="1" stream="out:Merge1_1"/>
+            <param name="order-on" value="time"/>
+            <param name="gui:x" value="536"/>
+            <param name="gui:y" value="154"/>
+            <param name="gui:bends:1" value="477,85;499,174"/>
+        </box>
+        <box name="DropHeartbeatTuples" type="filter">
+            <input port="1" stream="out:Merge1_1"/>
+            <output port="1" stream="MergedFeeds"/>
+            <param name="autogen-nomatch-port" value="false"/>
+            <param name="expression.0" value="isDataTuple"/>
+            <param name="gui:x" value="648"/>
+            <param name="gui:y" value="154"/>
+        </box>
+        <output-stream name="MergedFeeds">
+            <param name="gui:x" value="775"/>
+            <param name="gui:y" value="154"/>
+        </output-stream>
+    </add>
+</modify>

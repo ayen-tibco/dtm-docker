@@ -1,0 +1,764 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>
+      Sequence Operator Sample
+    </title>
+    <link rel="stylesheet" type="text/css" href="''">
+    <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+    <style type="text/css">
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    sb-readme.css : Styles for StreamBase Help READMEs
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    body {
+    background: #fff;
+    text-align: left;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    padding: 10px;  
+    margin: 0;
+    }
+
+    h1 {
+    color: black;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 0.75em 0px;
+    }
+
+    h2 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 130%;
+    font-weight: bold;
+    border-top: 0.5px solid gray; 
+    }
+
+    h3 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    font-size: 120%;
+    font-style: italic;
+    font-weight: bold;
+    width: 50%;
+    border-top: 1px dashed;
+    }
+
+    h3.subtitle {
+    color: black;
+    text-align: center;
+    border: none;
+    margin: -1.25em 0 1em 0;
+    padding: none;
+    font-size: 120%;
+    font-weight: bold;
+    font-style: normal;
+    width: 100%;
+    }
+
+    h4 {
+    color: black;
+    margin: 1em 0 0.75em 0;
+    padding: 2px 0;
+    border-top: none;
+    font-size: 110%;
+    font-weight: bold;
+    }
+
+    h5 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-style: italic;
+    }
+
+    h6 {
+    color: black;
+    margin: 1em 0 0.5em 0;
+    padding: 2px 0;
+    font-size: 100%;
+    font-weight: bold;
+    }
+
+    table {
+    border-collapse: collapse;
+    border-left: 1px solid gray;
+    border-top: 1px solid gray;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, Tahoma, sans-serif;
+    font-size: 10pt;
+    }
+
+    table.simplelist {
+    border: none;
+    }
+
+    thead {
+    line-height: 1em;
+    }
+
+    th {
+    background: #ddeeff;
+    text-align: left;
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    td {
+    padding: 6px 5px 5px;
+    vertical-align: top;
+    }
+
+    table p {
+    margin-bottom: 2px;
+    margin-top: 3px;
+    }
+
+    ul, ol {
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+    margin-left: 1.5em;
+    padding: 0 0 0 20px;
+    }
+
+    li {
+    margin-top: 0;
+    margin-bottom: 0;    
+    }
+
+    ol[compact] li p, ul[compact] li p {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+    }
+
+    li p {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    }
+
+    div.variablelist {
+    margin-left: 2em;
+    }
+
+    dt {
+    font-size: 95%;
+    font-weight: bold;
+    margin-top: 8.0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    dd {
+    margin-left: 1em;
+    }
+
+    div.column dt {
+    font-size: 95%;
+    font-weight: normal;
+    margin-top: 0pt;
+    margin-bottom: 1.0pt;
+    }
+
+    img {
+    border: none;
+    }
+
+    blockquote {
+    margin: 0 0 0 2em;
+    padding: 5px 0;
+    }
+
+    span {
+    margin: 0;
+    padding: 0;
+    }
+
+    a {
+    margin: 0;
+    padding: 0;
+    }
+
+    a:link, a:visited {
+    color: #003399;
+    }
+
+    a:hover {
+    color: #ff0000;
+    }
+
+    span.guilabel, 
+    span.guimenuitem, 
+    span.guibutton {
+    font-weight: bold;
+    color: #333333;
+    }
+
+    .column { 
+    padding: 2px; 
+    }
+
+    *.box {
+    border: 1px solid blue;
+    margin: 10px;
+    background: #def;
+    }
+
+    *.box *.title{
+    margin-top: 0;
+    }
+
+    *.box * {
+    margin-left: 1em;
+    }
+
+    div.back2top {
+    margin-top: 30px;
+    }
+
+    div.literallayout p {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    div.note *.title,
+    div.important *.title,
+    div.caution *.title,
+    div.tip *.title,
+    div.warning *.title {
+    margin: 0em 0em -0.85em 0em;
+    font-size: 90%;
+    }
+
+    li div.note *.title, 
+    li div.important *.title, 
+    li div.caution *.title, 
+    li div.tip *.title, 
+    li div.warning *.title {
+    margin: 0em 0em -0.2em 0em;
+    font-size: 90%;
+    }
+
+    table div.note *.title,
+    table div.important *.title,
+    table div.caution *.title,
+    table div.tip *.title,
+    table div.warning *.title {
+    margin: 0em 0em -0.5em 0em;
+    font-size: 90%;
+    }
+
+    pre.programlisting {
+    border: 1.0px solid gray;
+    padding: 2px;
+    background: #EEE;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    pre.programlisting em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    pre.screen {
+    border: 1px solid gray;
+    padding: 2px;
+    background: #FBFFFF;
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attribute, code.sgmltag-element, code.sgml-emptytag, code.function, 
+    code.type, code.exceptionname, code.parameter, code.varname, code.interfacename, 
+    code.oointerface, code.classname, code.ooclass, code.methodname, code.coexception,
+    code.command, code.option, code.filename, code.literal, code.uri, code.constant,
+    code.methodsynopsis, pre.classsynopsis, span.type, span.markup 
+    {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 95%;
+    }
+
+    code.sgmltag-attvalue, 
+    code.filename em.replaceable, 
+    code.literal  em.replaceable, 
+    code.filename em.replaceable code,
+    code.literal  em.replaceable code {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-style: italic;
+    }
+
+    em.replaceable {
+    font-style: italic;
+    }
+
+    code.sgmltag-element:before {
+    content:'<';
+    }
+
+    code.sgmltag-element:after {
+    content:'>';
+    } 
+
+    h2 code.sgmltag-element, h3 code.sgmltag-element, h4 code.sgmltag-element {
+    font-family: inherit; 
+    }
+
+    strong.command, strong.keycap {
+    color: #333333;
+    }
+
+    strong.userinput {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+    font-size: 90%;
+    font-weight: 500;
+    background-color: #e0e0e0;
+    }
+
+    p.nospaceabove {
+    margin-top: -1.0em;
+    }
+
+    div#header {
+    margin: 0;
+    padding-bottom: 0;
+    text-align: left;
+    font-size : 90%;
+    }
+
+    p#readmebanner {
+    font-size: 100%;
+    font-weight: bold;
+    text-align: center;
+    color: navy;
+    border-bottom: 1px solid #333;
+    }
+
+    div.toc dt {
+    font-weight: normal;
+    line-height: 1em;
+    margin-top: 0;
+    margin-bottom: 0.35em;
+    }
+
+    div.article>div.section, div.preface>div.section {
+    padding: 0 10px 0 10px;
+    }
+
+    div#footer {
+    padding-left: 0;
+    border-top: 1px solid #333;
+    font-size: 90%;
+    margin-top: 18pt;
+    }
+
+    div#footer p {
+    margin-top: 0;
+    }
+
+    </style>
+  </head>
+  <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+    <a name="_top"></a>
+    <div id="header">
+    </div>
+
+    <div id="subPageMasthead">
+      <p id="readmebanner">
+        StreamBase Documentation
+      </p>
+    </div>
+
+    <div class="article">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title">
+              <a name="Sequence" id="Sequence"></a>Sequence Operator Sample
+            </h1>
+          </div>
+        </div>
+      </div>
+      <a class="ix" name="Sequence sample"></a><a class="ix" name=
+      "Sequence operator, using"></a><a class="ix" name="samples, Sequence operator"></a>
+      <p>
+        This sample uses a Sequence operator to generate unique ID numbers for generic product
+        orders, allowing for easy querying when updating orders. The Orders input stream contains
+        the fields <code class="systemitem">name</code>d <code class=
+        "systemitem">productNum</code>, <code class="systemitem">quantity</code>, and <code class=
+        "systemitem">price</code>. The <code class="literal">OrdersChanges</code> input stream
+        contains the same fields plus an <code class="systemitem">orderID</code> field.
+      </p>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e15930" id="d0e15930"></a>Running Sequence.sbapp in <span>StreamBase
+                Studio</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1" compact>
+            <li class="listitem">
+              <p>
+                In the Package Explorer, double-click to open the <code class=
+                "filename">Sequence.sbapp</code> application. Make sure the application is the
+                currently active tab in the EventFlow Editor.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click the <span class="guilabel">Run</span> button. This opens the SB Test/Debug
+                perspective and starts the application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Manual Input view, select the Orders input stream.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter <strong class="userinput"><code>G Washington</code></strong>, <strong class=
+                "userinput"><code>12345678</code></strong>, <strong class=
+                "userinput"><code>1000</code></strong>, and <strong class=
+                "userinput"><code>4.30</code></strong> in the name, productNum, quantity, and price
+                fields, respectively.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click <span class="guibutton">Send Data</span> and observe that this order has been
+                assigned a field orderID of 1.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Manual Input view, select the OrderChanges input stream.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter <strong class="userinput"><code>1</code></strong> and <strong class=
+                "userinput"><code>1350</code></strong> in the orderID and quantity fields,
+                respectively.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In the Application Output view, note that the quantity of the previously entered
+                order has been updated.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Reselect the Orders input stream.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter <strong class="userinput"><code>G Washington</code></strong>, <strong class=
+                "userinput"><code>23456789</code></strong>, <strong class=
+                "userinput"><code>900</code></strong>, and <strong class=
+                "userinput"><code>12.50</code></strong> in the name, productNum, quantity, and
+                price fields, respectively.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click <span class="guibutton">Send Data</span> and observe that this order has been
+                assigned a field orderID of 2.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Reselect the OrderChanges input stream.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Enter <strong class="userinput"><code>2</code></strong>, <strong class=
+                "userinput"><code>98765432</code></strong>, and <strong class=
+                "userinput"><code>1900</code></strong> in the orderID, productNum, and quantity
+                fields, respectively.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                Click <span class="guibutton">Send Data</span> and observe that the second order
+                input has been updated.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                When done, press <span class="keycap"><strong>F9</strong></span> or click the
+                <span class="guilabel">Stop Running Application</span> button.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e16041" id="d0e16041"></a>Running Sequence.sbapp in Terminal Windows
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          This section describes how to run the sample in UNIX terminal windows or Windows command
+          prompt windows. On Windows, be sure to use the <span><span>StreamBase</span> Command
+          Prompt</span> from the Start menu as described in the <em class="citetitle">Test/Debug
+          Guide</em>, not the default command prompt.
+        </p>
+
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1" compact>
+            <li class="listitem">
+              <p>
+                Open terminal windows on UNIX, or three <span><span>StreamBase</span> Command
+                Prompt</span>s on Windows. In each window, navigate to the directory where the
+                sample is installed, or to your workspace copy of the sample, as described above.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 1, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbd Sequence.sbapp</code></strong>
+              </p>
+
+              <p>
+                The window shows <code class="computeroutput">notice[StreamBaseServer] listening on
+                port 10000</code>
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 2: type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbc dequeue OutputOrders</code></strong>
+              </p>
+
+              <p>
+                No output is displayed at this point, but the dequeuer is prepared to receive
+                output. This window will eventually show the output of the application.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbc enqueue OrderChanges</code></strong>
+              </p>
+
+              <p>
+                The <span class="command"><strong>sbc</strong></span> command is now awaiting
+                keyboard input.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 4, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbc enqueue Orders</code></strong>
+              </p>
+
+              <p>
+                The <span class="command"><strong>sbc</strong></span> command is now awaiting
+                keyboard input. Then type: <strong class="userinput"><code>G Washington, 12345678,
+                1200, 4.30</code></strong>
+              </p>
+
+              <p>
+                Observe this line in the dequeue window: <code class="computeroutput">G
+                Washington,12345678,1200,4.300,1,null,null,null,null</code>. Notice that this order
+                has been assigned an orderID of 1 in the fifth field. (The null values at the end
+                mean that this is a new order.)
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>1,null,null,1350,null</code></strong>
+              </p>
+
+              <p>
+                Observe this line in the dequeue window: <code class="computeroutput">G
+                Washington,12345678,1350,4.3,1,G Washington,12345678,1200,4.3</code>
+              </p>
+
+              <p>
+                The first set of values are the new order values and the second set of values (that
+                were null before) show the old values.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 4, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>G Washington, 23456789, 900, 12.50</code></strong>
+              </p>
+
+              <p>
+                Observe this line in the dequeue window: <code class="computeroutput">G
+                Washington,23456789,900,12.5,1,null,null,null,null</code>
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3, type:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>4, null, 98765432, 1900, null</code></strong>
+              </p>
+
+              <p>
+                Observe this line in the dequeue window: <code class="computeroutput">G
+                Washington,98765432,1900,12.5,4,G Washington,23456789,900,12.5</code>
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3 and 4 type <span class=
+                "keycap"><strong>Ctrl</strong></span>+<span class=
+                "keycap"><strong>C</strong></span> to stop the <span class=
+                "command"><strong>sbc</strong></span> commands.
+              </p>
+            </li>
+
+            <li class="listitem">
+              <p>
+                In window 3 or 4, type the following command to terminate the server and dequeuer:
+              </p>
+
+              <p>
+                <strong class="userinput"><code>sbadmin shutdown</code></strong>
+              </p>
+            </li>
+          </ol>
+        </div>
+
+        <p>
+          <a class="link" href="Sequence_README.html" title="Sequence Operator Sample">Back to Top
+          ^</a>
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both">
+                <a name="d0e16163" id="d0e16163"></a>Sample Location
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          When you load the sample into StreamBase Studio, Studio copies the sample's files to a
+          project folder in your Studio workspace directory. Because the Studio workspace location
+          is normally part of your home directory, you have full access rights there by default.
+        </p>
+
+        <div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <h3 class="title">
+            Important
+          </h3>
+
+          <p>
+            Load this sample in StreamBase Studio, and thereafter use the Studio workspace copy of
+            the sample to run and test it, even when running from the command prompt.
+          </p>
+        </div>
+
+        <p>
+          Using the workspace copy of the sample avoids the permission problems that can occur when
+          trying to work with the initially installed location of the sample. The default workspace
+          location for this sample is:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>studio-workspace</code></em>/sample_operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the <span><span>location</span></span> of <em class=
+          "replaceable"><code>studio-workspace</code></em> on your system.
+        </p>
+
+        <p>
+          In the default TIBCO StreamBase installation, this sample's files are initially installed
+          in:
+        </p>
+
+        <pre class="programlisting">
+<em class="replaceable"><code>streambase-install-dir</code></em>/sample/operator
+</pre>
+        <p>
+          See <span>Default Installation Directories in the <em class="citetitle">Installation
+          Guide</em></span> for the location of <em class=
+          "replaceable"><code>streambase-install-dir</code></em> on your system. This location may
+          require administrator privileges for write access, depending on your platform.
+        </p>
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>
+        Copyright © 2004-2015 TIBCO Software Inc. All rights reserved.
+      </p>
+    </div>
+  </body>
+</html>

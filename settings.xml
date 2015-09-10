@@ -1,0 +1,79 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+    http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <!-- vim: tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+    -->
+    <interactiveMode>false</interactiveMode>
+    <servers>  
+        <!-- set for running under jenkins only
+        <server> 
+            <id>UEP</id> 
+            <username>deployment</username> 
+            <password>deployment</password> 
+        </server>  
+        -->
+    </servers> 
+    <mirrors>
+       
+        <mirror>
+            <!--This sends everything else to /public -->
+            <id>UEP</id>
+            <mirrorOf>*</mirrorOf>
+            <url>http://nexus.tibco.com:8081/nexus/content/groups/uepgroup</url>
+        </mirror>
+       
+    </mirrors>
+    <profiles>
+        <profile>
+            <id>UEP</id>
+            <!--Enable snapshots for the built in central repo to direct -->
+            <!--all requests to nexus via the mirror -->
+            <repositories>
+               
+                <repository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                      <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                      <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                
+                <repository>
+                    <id>UEP</id>
+                    <url>http://nexus.tibco.com:8081/nexus/content/groups/uepgroup</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
+           
+            <pluginRepositories>
+               
+                <pluginRepository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                      <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                      <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+               
+            </pluginRepositories>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <!--make the profile active all the time -->
+        <activeProfile>UEP</activeProfile>
+    </activeProfiles>
+</settings>

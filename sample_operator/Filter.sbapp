@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <stream name="StockIn">
+            <schema>
+                <field name="Symbol" type="string"/>
+                <field name="Volume" type="int"/>
+            </schema>
+            <param name="gui:x" value="111"/>
+            <param name="gui:y" value="13"/>
+        </stream>
+        <box name="myFilter" type="filter">
+            <input port="1" stream="StockIn"/>
+            <output port="1" stream="StockOut"/>
+            <param name="autogen-nomatch-port" value="false"/>
+            <param name="expression.0" value="Volume &gt;= 10000"/>
+            <param name="gui:x" value="191"/>
+            <param name="gui:y" value="13"/>
+        </box>
+        <output-stream name="StockOut">
+            <param name="gui:x" value="271"/>
+            <param name="gui:y" value="13"/>
+        </output-stream>
+    </add>
+</modify>

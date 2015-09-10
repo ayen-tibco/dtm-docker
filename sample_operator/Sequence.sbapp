@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <named-schemas>
+            <schema name="OrderSchema">
+                <field name="orderID" type="long"/>
+                <field name="name" type="string"/>
+                <field name="productNum" type="long"/>
+                <field name="quantity" type="int"/>
+                <field name="price" type="double"/>
+            </schema>
+        </named-schemas>
+        <table-schemas>
+            <table-schema name="OrderTableSchema" schema="OrderSchema">
+                <primary-index type="btree">
+                    <field name="orderID"/>
+                </primary-index>
+            </table-schema>
+        </table-schemas>
+        <data name="OrdersTable" shared="false" source="concrete" type="querytable">
+            <param name="storage-method" value="memory"/>
+            <param name="replicated" value="false"/>
+            <param name="table-schema" value="OrderTableSchema"/>
+            <param name="truncate" value="false"/>
+            <preload format="csv" mode="empty"/>
+            <param name="gui:x" value="188"/>
+            <param name="gui:y" value="227"/>
+            <param name="gui:width" value="152"/>
+            <param name="gui:height" value="72"/>
+        </data>
+        <stream name="OrderChanges" schema="OrderSchema">
+            <param name="gui:x" value="128"/>
+            <param name="gui:y" value="78"/>
+        </stream>
+        <stream name="Orders">
+            <schema>
+                <field name="name" type="string"/>
+                <field name="productNum" type="long"/>
+                <field name="quantity" type="int"/>
+                <field name="price" type="double"/>
+            </schema>
+            <param name="gui:x" value="32"/>
+            <param name="gui:y" value="-36"/>
+        </stream>
+        <box name="GenerateOrderID" type="seqnum">
+            <input port="1" stream="Orders"/>
+            <output port="1" stream="out:GenerateOrderID_1"/>
+            <param name="output-field" value="orderID"/>
+            <param name="sequence-id" value="orderID"/>
+            <param name="update-expression" value="orderID + 1"/>
+            <param name="gui:x" value="128"/>
+            <param name="gui:y" value="-36"/>
+        </box>
+        <box name="UpdateOrders" type="query">
+            <input port="1" stream="OrderChanges"/>
+            <output port="1" stream="out:UpdateOrders_1"/>
+            <dataref id="querytable" name="OrdersTable"/>
+            <param name="operation" value="write"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="orderID"/>
+            <param name="key-value.0" value="input.orderID"/>
+            <param name="write-type" value="update"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-nothing"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="none">
+                    <include field="orderID"/>
+                </item>
+                <item name="old" prefix="old_" selection="all">
+                    <remove field="orderID"/>
+                </item>
+                <item name="new" selection="all">
+                    <remove field="orderID"/>
+                </item>
+                <item name="current" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="name">if notnull(input.name) then input.name else old.name</set>
+                    <set field="productNum">if notnull(input.productNum) then input.productNum else old.productNum</set>
+                    <set field="quantity">if notnull(input.quantity) then input.quantity else old.quantity</set>
+                    <set field="price">if notnull(input.price) then input.price else old.price</set>
+                </expressions>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+            </target-list>
+            <param name="gui:x" value="234"/>
+            <param name="gui:y" value="78"/>
+        </box>
+        <box name="AddOrders" type="query">
+            <input port="1" stream="out:GenerateOrderID_1"/>
+            <output port="1" stream="out:AddOrders_1"/>
+            <dataref id="querytable" name="OrdersTable"/>
+            <param name="operation" value="write"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="orderID"/>
+            <param name="key-value.0" value="input.orderID"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="force"/>
+            <param name="no-match-mode" value="output-no-match-nothing"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+                <item name="current" selection="none"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="all"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+            </target-list>
+            <param name="gui:x" value="234"/>
+            <param name="gui:y" value="-36"/>
+        </box>
+        <box name="OrdersUnion" type="union">
+            <input port="1" stream="out:AddOrders_1"/>
+            <input port="2" stream="out:UpdateOrders_1"/>
+            <output port="1" stream="OutputOrders"/>
+            <param name="strict" value="false"/>
+            <param name="gui:x" value="392"/>
+            <param name="gui:y" value="19"/>
+            <param name="gui:height" value="63"/>
+            <param name="gui:bends:1" value="342,-6;352,39"/>
+            <param name="gui:bends:2" value="329,108;339,62"/>
+        </box>
+        <output-stream name="OutputOrders">
+            <param name="gui:x" value="500"/>
+            <param name="gui:y" value="21"/>
+            <param name="gui:bends:1" value="479,50;479,51"/>
+        </output-stream>
+    </add>
+</modify>

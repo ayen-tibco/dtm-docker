@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <annotations>
+            <annotation name="hygienic"/>
+        </annotations>
+        <data name="Symbols" shared="false" source="concrete" type="querytable">
+            <param name="storage-method" value="memory"/>
+            <param name="replicated" value="false"/>
+            <table-schema>
+                <schema>
+                    <field name="symbol" type="string"/>
+                    <field description="a positive or negative value" name="lastPriceChange" type="double"/>
+                </schema>
+                <primary-index type="hash">
+                    <field name="symbol"/>
+                </primary-index>
+                <index type="btree">
+                    <field name="abs(lastPriceChange)"/>
+                </index>
+            </table-schema>
+            <param name="truncate" value="false"/>
+            <preload format="csv" mode="text">IBM,-4.3&#13;
+MSFT,6.7&#13;
+GOOG,-2.3&#13;
+APPL,9.3</preload>
+            <param name="gui:x" value="-184"/>
+            <param name="gui:y" value="56"/>
+            <param name="gui:width" value="118"/>
+            <param name="gui:height" value="72"/>
+        </data>
+        <stream name="QueryByPriceDelta">
+            <schema>
+                <field description="the value to query against lastPriceChange in the Symbols table" name="queryPriceChange" type="double"/>
+            </schema>
+            <param name="gui:x" value="-422"/>
+            <param name="gui:y" value="-78"/>
+        </stream>
+        <box name="EnsureAbsolute" type="map">
+            <input port="1" stream="QueryByPriceDelta"/>
+            <output port="1" stream="out:EnsureAbsolute_1"/>
+            <target-list>
+                <item name="input" selection="all">
+                    <replace field="queryPriceChange">abs(queryPriceChange)</replace>
+                </item>
+            </target-list>
+            <param name="gui:x" value="-256"/>
+            <param name="gui:y" value="-78"/>
+        </box>
+        <box name="Query" type="query">
+            <input port="1" stream="out:EnsureAbsolute_1"/>
+            <output port="1" stream="QueryResults"/>
+            <dataref id="querytable" name="Symbols"/>
+            <param name="operation" value="read"/>
+            <param name="where" value="secondary-key"/>
+            <param name="key-field.0" value="abs(lastPriceChange)"/>
+            <param name="key-lowerbound-value.0" value="queryPriceChange"/>
+            <param name="key-lowerbound-operation.0" value="eq"/>
+            <param name="key-upperbound-operation.0" value="none"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-explicit"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <item name="current" selection="all"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+            </target-list>
+            <target-list goal-schema="schema:Symbols" name="insert">
+                <item name="input" selection="all"/>
+            </target-list>
+            <target-list goal-schema="schema:Symbols" name="update">
+                <item name="input" selection="all"/>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="symbol">"NOTFOUND"</set>
+                    <set field="lastPriceChange">null</set>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="-155"/>
+            <param name="gui:y" value="-78"/>
+        </box>
+        <output-stream name="QueryResults">
+            <param name="gui:x" value="-66"/>
+            <param name="gui:y" value="-78"/>
+        </output-stream>
+        <gui.note name="Note">
+            <property name="description" value="Send a double value to the input stream to look up in the Symbols table any rows whose lastPriceChange value matches the value you send. &#13;&#10;&#13;&#10;The table is indexed by the absolute value of lastPriceChange, and the input stream goes through a Map operator that ensures the query is also performed using absolute values only. This means you can send either &quot;2.3&quot; or &quot;-2.3&quot; and still get a match."/>
+            <param name="gui:x" value="-528"/>
+            <param name="gui:y" value="21"/>
+            <param name="gui:width" value="272"/>
+            <param name="gui:height" value="197"/>
+        </gui.note>
+    </add>
+</modify>
