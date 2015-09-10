@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>90</x>
+      <y>20</y>
+      <w>110</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>SSB1SWITCH</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>210</x>
+      <y>20</y>
+      <w>110</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>SSB2SWITCH</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>330</x>
+      <y>20</y>
+      <w>110</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>DAL1SWITCH</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>450</x>
+      <y>20</y>
+      <w>110</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>DAL2SWITCH</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>570</x>
+      <y>20</y>
+      <w>110</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>COL1SWITCH</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>690</x>
+      <y>20</y>
+      <w>110</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>COL2SWITCH</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>20</x>
+      <y>60</y>
+      <w>800</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>valign=center
+halign=left
+bg=yellow
+PART1           Active                  Replica                Replica                Replica                Replica                Replica</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>20</x>
+      <y>110</y>
+      <w>800</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>valign=center
+halign=left
+bg=yellow
+PART2           Replica                Active                  Replica                Replica                Replica                Replica</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>20</x>
+      <y>160</y>
+      <w>800</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>valign=center
+halign=left
+bg=yellow
+PART3           Replica                Replica                Active                  Replica                Replica                Replica</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>20</x>
+      <y>210</y>
+      <w>800</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>valign=center
+halign=left
+bg=yellow
+PART4           Replica                Replica                Replica                Active                  Replica                Replica</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>20</x>
+      <y>260</y>
+      <w>800</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>valign=center
+halign=left
+bg=yellow
+PART5           Replica                Replica                Replica                Replica                Active                  Replica</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>20</x>
+      <y>310</y>
+      <w>800</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>valign=center
+halign=left
+bg=yellow
+PART6           Replica                Replica                Replica                Replica                Replica                Active </panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

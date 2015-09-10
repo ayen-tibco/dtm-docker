@@ -1,0 +1,69 @@
+Scratch pad area for testing discover hydra project snippets
+
+Requirements
+============
+
+AST 2.5.1 (or 2.5.2) from Tibco
+Maven version 3.x from https://maven.apache.org/
+
+
+Install AST from internal nfs directory
+=======================================
+
+mkdir AST-2.5.1
+cd AST-2.5.1
+tar -xvzf /opt/kabira/release/P.AST/P.AST-2.5.1-GA-LINUXx86_64/P.AST-2.5.1-LINUXx86_64.tgz
+cd kis/3rdparty/linux
+ln -sf /opt/kabira/3rdparty/linux/tibcojre .
+cd ../../../..
+
+export SW_HOME=$(pwd)/AST-2.5.1/kis
+export PATH=${PATH}:${SW_HOME}/distrib/kabira/bin
+
+
+Install AST from edelivery
+==========================
+
+unzip TIB_ast_2.5.1_linux_x86_64.zip
+./TIBCOUniversalInstaller-lnx-x86-64.bin
+Choose AST-2.5.1 directory
+
+export SW_HOME=$(pwd)/AST-2.5.1/ast/2.5.1
+export PATH=${PATH}:${SW_HOME}/distrib/kabira/bin
+
+
+Start runtime
+=============
+
+./test-server.ksh start
+
+
+Run tests
+=========
+
+mvn install $(cat target/server.options)
+
+
+Run code coverage
+=================
+
+mvn cobertura:cobertura  $(cat target/server.options)
+
+
+Build site docs
+===============
+
+mvn site -DskipTests
+
+This includes a coverage report, project info ( such as dependencies ) and any 
+apt-formatted project documentation.
+
+To view the generated docs, use firefox target/site/index.html
+
+To publish to web server, use mvn site:deploy
+
+
+Stop and remove runtime
+=======================
+
+./test-server.ksh remove

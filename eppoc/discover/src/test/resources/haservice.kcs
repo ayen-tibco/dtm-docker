@@ -1,0 +1,141 @@
+// Overview
+//      haservice configuration for hydra
+//
+
+configuration "hydra" version "1.0" type "com.tibco.haservice"
+{
+    configure com.tibco.haservice
+    {
+        HighAvailability
+        {
+            // Define list of nodes
+            //
+            // A quorum is set so that if one node can't be "seen", then the
+            // notifier is called.  In the notifier, the stopping of DKE can be implemented
+            //
+            nodeGroups = 
+            {
+                {
+                    name = "All_nodes";
+                    quorum = true;
+                    quorumNotifier = "com.discover.hydra.lifecycle.QuorumNotifier";
+                    quorumPercentage = 99;
+                    nodeList =
+                    {
+                        {
+                            name = "SSB1SWITCH";
+                        },
+                        {
+                            name = "SSB2SWITCH";
+                        },
+                        {
+                            name = "DAL1SWITCH";
+                        },
+                        {
+                            name = "DAL2SWITCH";
+                        },
+                        {
+                            name = "COL1SWITCH";
+                        },
+                        {
+                            name = "COL2SWITCH";
+                        }
+                    };
+                }
+            };
+
+            // Static partition groups
+            //
+            // One partition is sufficient
+	    //
+            staticPartitionGroups =
+            {
+                {
+                    name = "KEYS_group";
+                    loadOnNodeGroups = { "All_nodes" };
+                    partitions =
+                    {
+                        {
+                            name = "KEYS_store";
+
+                            // Determine how objects are replicated during a migrate of an 
+                            // object partition.
+                            //
+                            forceReplication = false;
+
+                            // Failover performance settings.
+                            // 
+                            // numberOfThreads should be set to the number of cores for
+                            // shortest failover time
+                            //
+                            // objectsLockedPerTransaction set low will increase failover time
+                            // but reduce contention with on-going work.  Setting it high will
+                            // reduce failover time but increase contention with on-going work.
+                            // Testing should be used to determine optimal settings
+                            //
+                            objectsLockedPerTransaction = 1000;
+                            numberOfThreads = 8;
+
+                            // Before migrating the partition data, remove any instances that 
+                            // exist on the local node.
+                            //
+                            enableAction = JOIN_CLUSTER_PURGE;
+
+                            // Perform any object migrations needed to migrate partitions owned by 
+                            // this node to the first order replica node, and remove this node 
+                            // from all replica lists.  Audits disabled
+                            //
+                            disableAction = LEAVE_CLUSTER_FORCE;
+
+                            activeNode = "SSB1SWITCH";
+                            replicas =
+                            {
+                                {
+                                    name = "SSB2SWITCH";
+                                    type = SYNCHRONOUS;
+                                },
+                                {
+                                    name = "DAL1SWITCH";
+                                    type = SYNCHRONOUS;
+                                },
+                                {
+                                    name = "DAL2SWITCH";
+                                    type = SYNCHRONOUS;
+                                },
+                                {
+                                    name = "COL1SWITCH";
+                                    type = SYNCHRONOUS;
+                                },
+                                {
+                                    name = "COL2SWITCH";
+                                    type = SYNCHRONOUS;
+                                }
+                            };
+                        }
+                    };
+                }
+            };
+
+            // Map the key class to partition group.  Partition will be based on the hash of
+            // the clientNodeId to get a uniform distribution
+            //
+            // Note, however, since we only have one partition this mapper will always map
+            // the key to the single partition.  An option is to implement an application
+            // specific mapper that just statically maps to KEYS_store
+            //
+            partitionMappers = 
+            {
+                {   
+                    partitionGroup = "KEYS_group";
+                    hashManagedClasses =
+                    {
+                        {
+                            className = "com.discover.hydra.ManagedZPK";
+                            fieldName = "clientNodeId";
+                        }
+                    };
+                }
+            }; 
+        };
+    };
+};

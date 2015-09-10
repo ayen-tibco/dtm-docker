@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.baselet.element.old.allinone.SequenceDiagram</type>
+    <coordinates>
+      <x>20</x>
+      <y>20</y>
+      <w>1140</w>
+      <h>500</h>
+    </coordinates>
+    <panel_attributes>title: Create on SSB2
+_APOP~APOP_|_SSB1SWITCH~SSB1_|_SSB2SWITCH~SSB2_|_DAL1SWITCH~DAL1_|_DAL2SWITCH~DAL2_|_COL1SWITCH~COL1_|_COL2SWITCH~COL2_
+
+iframe{:Sync Transaction
+APOP-&gt;&gt;SSB2:DKE
+SSB2-&gt;&gt;SSB2:Create object
+SSB2-&gt;&gt;SSB1:Route create
+SSB1-&gt;&gt;SSB2:Replicate (sync)
+SSB2-&gt;&gt;APOP:Response
+iframe}
+iframe{:Async Transaction
+SSB1-&gt;&gt;DAL1:Replicate (async)
+SSB1-&gt;&gt;DAL2:Replicate (async)
+SSB1-&gt;&gt;COL1:Replicate (async)
+SSB1-&gt;&gt;COL2:Replicate (async)
+iframe}
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
