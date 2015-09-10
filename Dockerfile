@@ -49,7 +49,8 @@ COPY settings.xml /root/.m2/
 # Download and extract SB-LDM SF gridlib distro package
 RUN \
   cd /opt && \
-  curl https://hermes.streambase.com/dist/latest/branches/broadway/linux64/streambase-sf-distribution-7.5.5broay_225040.linux.x86_64.tar.gz | tar -xzC /opt && \
+  wget https://hermes.streambase.com/dist/latest/branches/broadway/linux64/streambase-sf-distribution-7.5.5broay_225040.linux.x86_64.tar.gz && \
+  tar -xzvf streambase-sf-distribution-7.5.5broay_225040.linux.x86_64.tar.gz -C /opt && \
   tar -xzvf /opt/tibco/sb-cep/7.5/gridlib/TIB_sb-cep_7.5.5_runtime_gridlib_linux64.tar.gz -C /
 ENV STREAMBASE_HOME=/opt/tibco/sb-cep/7.5
 
