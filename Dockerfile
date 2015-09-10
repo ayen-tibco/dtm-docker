@@ -49,9 +49,9 @@ COPY settings.xml /root/.m2/
 # Download and extract SB-LDM SF gridlib distro package
 RUN \
   cd /opt && \
-  wget https://hermes.streambase.com/dist/latest/branches/broadway/linux64/streambase-sf-distribution-7.5.5broay_225040.linux.x86_64.tar.gz && \
-  tar -xzvf streambase-sf-distribution-7.5.5broay_225040.linux.x86_64.tar.gz -C /opt && \
-  tar -xzvf /opt/tibco/sb-cep/7.5/gridlib/TIB_sb-cep_7.5.5_runtime_gridlib_linux64.tar.gz -C /
+  wget https://hermes.streambase.com/dist/official/7.5.4.3/linux64/streambase-sf-distribution-7.5.4.3.linux.x86_64.tar.gz && \
+  tar -xzvf streambase-sf-distribution-7.5.4.3.linux.x86_64.tar.gz -C /opt && \
+  tar -xzvf /opt/tibco/sb-cep/7.5/gridlib/TIB_sb-cep_7.5.4_runtime_gridlib_linux64.tar.gz -C /
 ENV STREAMBASE_HOME=/opt/tibco/sb-cep/7.5
 
 # Download SB Map Operator Sample for hello world testing
