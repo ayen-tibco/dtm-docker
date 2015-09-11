@@ -1,8 +1,8 @@
 # If you loaded redhat-rhel-server-7.0-x86_64 to your local registry, uncomment this FROM line instead:
 # FROM registry.access.redhat.com/rhel 
 # Pull the rhel image from the local repository
-# Build DTM from rhel6 latest
-FROM registry.access.redhat.com/rhel6
+# Build DTM from rhel7 latest
+FROM registry.access.redhat.com/rhel
 
 MAINTAINER Adam Yen
 
