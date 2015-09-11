@@ -7,4 +7,4 @@ administrator install node adminport=5556 nodename=$HOSTNAME.$1 deploydirectorie
 administrator adminport=5556 start node
 
 #Deploy an .sbapp "detached" mode - the configuration parameter is optional
-java -jar $SW_HOME/distrib/tibco/uepp/java/deploy.jar adminport=5556 detach=false /opt/tibco/cfgmgt/sample_operator/Map.sbapp configuration=/opt/tibco/cfgmgt/sample_operator/sbd.sbconf
+java -jar $SW_HOME/distrib/tibco/dtm/java/deploy.jar adminport=5556 detach=false /opt/tibco/cfgmgt/sample_operator/Map.sbapp configuration=/opt/tibco/cfgmgt/sample_operator/sbd.sbconf
