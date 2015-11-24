@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <stream name="MarketData">
+            <schema>
+                <field name="symbol" type="string"/>
+                <field name="price" type="double"/>
+                <field name="time" type="timestamp"/>
+            </schema>
+            <param name="gui:x" value="107"/>
+            <param name="gui:y" value="-53"/>
+        </stream>
+        <stream name="TradeData">
+            <schema>
+                <field name="symbol" type="string"/>
+                <field name="price" type="double"/>
+                <field name="shares" type="int"/>
+                <field name="time" type="timestamp"/>
+            </schema>
+            <param name="gui:x" value="107"/>
+            <param name="gui:y" value="46"/>
+        </stream>
+        <box name="RelevanceFilter" type="pattern">
+            <input port="1" stream="MarketData"/>
+            <input port="2" stream="TradeData"/>
+            <output port="1" stream="RelevantMarketData"/>
+            <param name="window-type" value="field"/>
+            <param name="template" value="input2 -&gt; input1"/>
+            <param name="output-name.0" value="symbol"/>
+            <param name="output.0" value="input1.symbol"/>
+            <param name="output-name.1" value="price"/>
+            <param name="output.1" value="input1.price"/>
+            <param name="output-name.2" value="time"/>
+            <param name="output.2" value="input1.time"/>
+            <param name="order-field" value="time"/>
+            <param name="delta-mode" value="false"/>
+            <param name="predicate" value="input2.symbol == input1.symbol"/>
+            <param name="window-size" value="86400"/>
+            <param name="gui:x" value="229"/>
+            <param name="gui:y" value="-4"/>
+            <param name="gui:bends:1" value="186,-23;194,16"/>
+            <param name="gui:bends:2" value="198,76;208,36"/>
+        </box>
+        <output-stream name="RelevantMarketData">
+            <param name="gui:x" value="357"/>
+            <param name="gui:y" value="-4"/>
+        </output-stream>
+    </add>
+</modify>

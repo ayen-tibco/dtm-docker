@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbfs:Simulation xmlns:sbfs="http://www.streambase.com/SBFS" Description="">
+  <SimStreams Name="TradesIn2">
+    <ProcessingOptions DataRatePerSecond="1.0" DataGenerationMethod="Custom"/>
+    <Schema>
+      <Fields Name="Symbol" DataTypeName="string" FieldLength="5">
+        <Distribution GenerationMethod="RandomString"/>
+      </Fields>
+      <Fields Name="PricePerShare" DataTypeName="double" FieldLength="8">
+        <Distribution GenerationMethod="Uniform"/>
+      </Fields>
+    </Schema>
+  </SimStreams>
+</sbfs:Simulation>

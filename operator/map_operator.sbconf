@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- The StreamBase configuration file.  The top level tag is:
+     <streambase-configuration>
+  
+     The XML XInclude standard is used to support including snippets of XML in
+     this file, using the following namespace declaration: 
+        xmlns:xi="http://www.w3.org/2001/XInclude
+     In any section place an XInclude directive, such as:
+        <xi:include href="included.sbconf"/>
+     to include the contents of "included.sbconf" at that location.
+  -->
+<streambase-configuration xmlns:xi="http://www.w3.org/2001/XInclude"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:noNamespaceSchemaLocation="http://www.streambase.com/schemas/sbconf/">
+    <global>
+        <module-search directory="${SW_HOME}/operator/Modules"/>
+        <operator-resource-search directory="${SW_HOME}/operator/ResourceFiles"/>
+    </global>
+
+    <server>
+        <!-- Port to listen on. StreamBase defaults to 10000. -->
+        <param name="tcp-port" value="10000"/> 
+
+    </server>
+
+</streambase-configuration>
+

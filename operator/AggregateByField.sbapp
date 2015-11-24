@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <stream name="TradesIn">
+            <schema>
+                <field name="Time" type="int"/>
+                <field name="Symbol" type="string"/>
+                <field name="Volume" type="int"/>
+            </schema>
+            <param name="gui:x" value="101"/>
+            <param name="gui:y" value="13"/>
+        </stream>
+        <box name="AggregateTrades" type="aggregate">
+            <input port="1" stream="TradesIn"/>
+            <output port="1" stream="OutputChunkedTrades"/>
+            <param name="dimension-name.0" value="AggregateTradesDim"/>
+            <param name="dimension-type.0" value="value"/>
+            <param name="dimension-value.0" value="Time"/>
+            <param name="dimension-offset.0" value="0"/>
+            <param name="dimension-advance.0" value="30"/>
+            <param name="dimension-partial.0" value="no"/>
+            <param name="dimension-size.0" value="30"/>
+            <param name="dimension-emit-close-first.0" value="false"/>
+            <param name="output-group-by" value="true"/>
+            <target-list>
+                <expressions>
+                    <include field="TimeChunk">openval('AggregateTradesDim')</include>
+                    <include field="TotalVolume">sum(Volume)</include>
+                </expressions>
+            </target-list>
+            <param name="group-by-name.0" value="Symbol"/>
+            <param name="group-by.0" value="Symbol"/>
+            <param name="gui:x" value="199"/>
+            <param name="gui:y" value="13"/>
+        </box>
+        <output-stream name="OutputChunkedTrades">
+            <param name="gui:x" value="340"/>
+            <param name="gui:y" value="13"/>
+        </output-stream>
+    </add>
+</modify>

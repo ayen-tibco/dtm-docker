@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <stream name="TradesIn">
+            <schema>
+                <field name="seqnum" type="int"/>
+                <field name="symbol" type="string"/>
+                <field name="price" type="double"/>
+                <field name="time" type="timestamp"/>
+            </schema>
+            <param name="gui:x" value="105"/>
+            <param name="gui:y" value="13"/>
+        </stream>
+        <box name="Aggregate2Dimensions" type="aggregate">
+            <input port="1" stream="TradesIn"/>
+            <output port="1" stream="out:Aggregate2Dimensions_1"/>
+            <param name="dimension-name.0" value="CountDim"/>
+            <param name="dimension-type.0" value="tuple"/>
+            <param name="dimension-offset.0" value="0"/>
+            <param name="dimension-advance.0" value="5"/>
+            <param name="dimension-partial.0" value="no"/>
+            <param name="dimension-size.0" value="5"/>
+            <param name="dimension-emit-close-first.0" value="false"/>
+            <param name="dimension-name.1" value="TimeDim"/>
+            <param name="dimension-type.1" value="value"/>
+            <param name="dimension-value.1" value="time"/>
+            <param name="dimension-offset.1" value="0"/>
+            <param name="dimension-advance.1" value="60"/>
+            <param name="dimension-partial.1" value="no"/>
+            <param name="dimension-size.1" value="60"/>
+            <param name="dimension-emit-close-first.1" value="false"/>
+            <param name="output-group-by" value="true"/>
+            <target-list>
+                <expressions>
+                    <include field="numberShares">count()</include>
+                    <include field="averagePricePerShare">avg(price)</include>
+                    <include field="lowerBoundTimeWindow">openval("TimeDim")</include>
+                    <include field="upperBoundTimeWindow">closeval("TimeDim")</include>
+                    <include field="firstSeqnum">firstval(seqnum)</include>
+                    <include field="lastSeqnum">lastval(seqnum)</include>
+                </expressions>
+            </target-list>
+            <param name="group-by-name.0" value="symbol"/>
+            <param name="group-by.0" value="symbol"/>
+            <param name="gui:x" value="223"/>
+            <param name="gui:y" value="13"/>
+        </box>
+        <box name="ConvertTimeToSeconds" type="map">
+            <input port="1" stream="out:Aggregate2Dimensions_1"/>
+            <output port="1" stream="AvgPricePSOut"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <expressions>
+                    <include field="symbol">symbol</include>
+                    <include field="numberShares">numberShares</include>
+                    <include field="averagePricePerShare">averagePricePerShare</include>
+                    <include field="lowerBoundTimeWindow">to_seconds(lowerBoundTimeWindow)</include>
+                    <include field="upperBoundTimeWindow">to_seconds(upperBoundTimeWindow)</include>
+                    <include field="firstSeqnum">firstSeqnum</include>
+                    <include field="lastSeqnum">lastSeqnum</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="389"/>
+            <param name="gui:y" value="13"/>
+        </box>
+        <output-stream name="AvgPricePSOut">
+            <param name="gui:x" value="526"/>
+            <param name="gui:y" value="13"/>
+        </output-stream>
+    </add>
+</modify>

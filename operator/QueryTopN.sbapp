@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.2souon_202548">
+    <add>
+        <data name="DataTable" shared="false" source="concrete" type="querytable">
+            <param name="storage-method" value="memory"/>
+            <param name="replicated" value="false"/>
+            <table-schema>
+                <schema>
+                    <field name="value" type="int"/>
+                    <field name="symbol" type="string"/>
+                </schema>
+                <primary-index type="btree">
+                    <field name="value"/>
+                </primary-index>
+            </table-schema>
+            <param name="truncate" value="false"/>
+            <preload file="stringtable.csv" format="csv" mode="file"/>
+            <param name="gui:x" value="-104"/>
+            <param name="gui:y" value="147"/>
+            <param name="gui:width" value="118"/>
+            <param name="gui:height" value="63"/>
+        </data>
+        <stream name="enterN">
+            <property name="description" value="Number of top records being requested"/>
+            <schema>
+                <field name="howMany" type="int"/>
+            </schema>
+            <param name="gui:x" value="-200"/>
+            <param name="gui:y" value="26"/>
+        </stream>
+        <box name="QueryBySorting" type="query">
+            <property name="description" value="Reads the values in the table and selects rows with the top n ids"/>
+            <input port="1" stream="enterN"/>
+            <output port="1" stream="out:QueryBySorting_1"/>
+            <dataref id="querytable" name="DataTable"/>
+            <param name="operation" value="read"/>
+            <param name="where" value="primary-key"/>
+            <param name="limit" value="howMany"/>
+            <param name="key-field.0" value="value"/>
+            <param name="key-lowerbound-operation.0" value="begin"/>
+            <param name="key-upperbound-operation.0" value="end"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="ignore"/>
+            <param name="no-match-mode" value="output-no-match-explicit"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <item name="current" prefix="table_current_" selection="all"/>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+            </target-list>
+            <param name="gui:x" value="-76"/>
+            <param name="gui:y" value="26"/>
+        </box>
+        <box name="listTuples" type="aggregate">
+            <input port="1" stream="out:QueryBySorting_1"/>
+            <output port="1" stream="topNlist"/>
+            <param name="dimension-name.0" value="makeList"/>
+            <param name="dimension-type.0" value="Predicate"/>
+            <param name="dimension-partial.0" value="no"/>
+            <param name="dimension-close-predicate.0" value="count()=howMany"/>
+            <param name="dimension-emit-close-first.0" value="false"/>
+            <param name="output-group-by" value="true"/>
+            <target-list>
+                <expressions>
+                    <include field="topNValuesList">aggregatelist(tuple(table_current_value AS value,table_current_symbol AS symbol))</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="46"/>
+            <param name="gui:y" value="-84"/>
+        </box>
+        <box name="rename" type="map">
+            <input port="1" stream="out:QueryBySorting_1"/>
+            <output port="1" stream="topNtuples"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <expressions>
+                    <include field="value">table_current_value</include>
+                    <include field="symbol">table_current_symbol</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="46"/>
+            <param name="gui:y" value="26"/>
+        </box>
+        <output-stream name="topNlist">
+            <param name="gui:x" value="165"/>
+            <param name="gui:y" value="-84"/>
+        </output-stream>
+        <output-stream name="topNtuples">
+            <param name="gui:x" value="168"/>
+            <param name="gui:y" value="26"/>
+        </output-stream>
+        <gui.note name="Note">
+            <property name="description" value="This sample illustrates extracting the highest N values for a field from a query table."/>
+            <param name="gui:x" value="-365"/>
+            <param name="gui:y" value="16"/>
+            <param name="gui:width" value="147"/>
+            <param name="gui:height" value="71"/>
+        </gui.note>
+        <gui.note name="Note2">
+            <property name="description" value="The Query operator uses a b-tree sorted index to find the N highest values, where N is specified by the input int."/>
+            <note-target name="QueryBySorting"/>
+            <param name="gui:x" value="-226"/>
+            <param name="gui:y" value="-74"/>
+            <param name="gui:width" value="187"/>
+            <param name="gui:height" value="75"/>
+        </gui.note>
+        <gui.note name="Note3">
+            <property name="description" value="The query table pre-loads two-column records of random ints and strings from a CSV data file."/>
+            <note-target name="DataTable"/>
+            <param name="gui:x" value="-328"/>
+            <param name="gui:y" value="147"/>
+            <param name="gui:width" value="186"/>
+            <param name="gui:height" value="63"/>
+        </gui.note>
+        <gui.note name="Note4">
+            <property name="description" value="The bottom output stream emits the query results as tuples. The top one aggregates the  tuples as a list."/>
+            <param name="gui:x" value="50"/>
+            <param name="gui:y" value="137"/>
+            <param name="gui:width" value="176"/>
+            <param name="gui:height" value="73"/>
+        </gui.note>
+    </add>
+</modify>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <data name="SharedDataLock" type="lockset">
+            <schema>
+                <field name="sharedDataLockKey" type="int"/>
+            </schema>
+            <param name="gui:x" value="214"/>
+            <param name="gui:y" value="208"/>
+            <param name="gui:width" value="194"/>
+            <param name="gui:height" value="72"/>
+        </data>
+        <data name="SharedDataQueryTable" shared="false" source="concrete" type="querytable">
+            <param name="storage-method" value="memory"/>
+            <param name="replicated" value="false"/>
+            <table-schema>
+                <schema>
+                    <field name="sharedDataLockKey" type="int"/>
+                    <field name="protectedDataValue" type="string"/>
+                </schema>
+                <primary-index type="btree">
+                    <field name="sharedDataLockKey"/>
+                </primary-index>
+            </table-schema>
+            <param name="truncate" value="false"/>
+            <preload format="csv" mode="empty"/>
+            <param name="gui:x" value="184"/>
+            <param name="gui:y" value="105"/>
+            <param name="gui:width" value="254"/>
+            <param name="gui:height" value="73"/>
+        </data>
+        <stream name="WriteProtectedData">
+            <schema>
+                <field name="protectedDataKey" type="int"/>
+                <field name="protectedDataValueInit" type="string"/>
+            </schema>
+            <param name="gui:x" value="-17"/>
+            <param name="gui:y" value="-29"/>
+        </stream>
+        <box name="LockSharedData" type="lock">
+            <input port="1" stream="WriteProtectedData"/>
+            <output port="1" stream="out:LockSharedData_1"/>
+            <dataref id="lockset" name="SharedDataLock"/>
+            <param name="key.0" value="protectedDataKey"/>
+            <param name="gui:x" value="113"/>
+            <param name="gui:y" value="-29"/>
+        </box>
+        <box name="WriteSharedData" type="query">
+            <input port="1" stream="out:LockSharedData_1"/>
+            <output port="1" stream="out:WriteSharedData_1"/>
+            <dataref id="querytable" name="SharedDataQueryTable"/>
+            <param name="operation" value="write"/>
+            <param name="where" value="primary-key"/>
+            <param name="key-field.0" value="sharedDataLockKey"/>
+            <param name="key-value.0" value="protectedDataKey"/>
+            <param name="write-type" value="insert"/>
+            <param name="if-write-fails" value="force"/>
+            <param name="no-match-mode" value="output-no-match-nothing"/>
+            <param name="order-by-direction" value="none"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <item name="old" selection="none"/>
+                <item name="new" selection="none"/>
+                <item name="current" selection="none"/>
+                <expressions>
+                    <include field="sharedDataLockKey">new.sharedDataLockKey</include>
+                    <include field="protectedDataValue">new.protectedDataValue</include>
+                </expressions>
+            </target-list>
+            <target-list name="insert">
+                <item name="input" selection="none"/>
+                <expressions>
+                    <set field="protectedDataValue">protectedDataValueInit</set>
+                </expressions>
+            </target-list>
+            <target-list name="update">
+                <item name="input" selection="none"/>
+            </target-list>
+            <target-list name="no-match">
+                <item name="input" selection="none"/>
+            </target-list>
+            <param name="gui:x" value="281"/>
+            <param name="gui:y" value="-29"/>
+        </box>
+        <box name="UnlockSharedData" type="unlock">
+            <input port="1" stream="out:WriteSharedData_1"/>
+            <output port="1" stream="ReturnProtectedData"/>
+            <dataref id="lockset" name="SharedDataLock"/>
+            <param name="key.0" value="sharedDataLockKey"/>
+            <param name="gui:x" value="438"/>
+            <param name="gui:y" value="-29"/>
+        </box>
+        <output-stream name="ReturnProtectedData">
+            <param name="gui:x" value="579"/>
+            <param name="gui:y" value="-29"/>
+        </output-stream>
+    </add>
+</modify>

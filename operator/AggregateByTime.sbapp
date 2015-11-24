@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <stream name="TradesIn">
+            <schema>
+                <field name="Symbol" type="string"/>
+                <field name="PricePerShare" type="double"/>
+            </schema>
+            <param name="gui:x" value="369"/>
+            <param name="gui:y" value="151"/>
+        </stream>
+        <box name="Addtime" type="map">
+            <input port="1" stream="TradesIn"/>
+            <output port="1" stream="out:Addtime_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="time">now()</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="449"/>
+            <param name="gui:y" value="151"/>
+        </box>
+        <box name="AggregateAvgByTime" type="aggregate">
+            <input port="1" stream="out:Addtime_1"/>
+            <output port="1" stream="AvgOut"/>
+            <param name="dimension-name.0" value="AggregateAvgByTimeDim"/>
+            <param name="dimension-type.0" value="Time"/>
+            <param name="dimension-offset.0" value="0"/>
+            <param name="dimension-advance.0" value="2"/>
+            <param name="dimension-partial.0" value="no"/>
+            <param name="dimension-size.0" value="2"/>
+            <param name="dimension-emit-close-first.0" value="false"/>
+            <param name="output-group-by" value="true"/>
+            <target-list>
+                <expressions>
+                    <include field="TimeBasedAverage">avg(PricePerShare)</include>
+                    <include field="start_time">openval('AggregateAvgByTimeDim')</include>
+                    <include field="end_time">closeval('AggregateAvgByTimeDim')</include>
+                    <include field="first_time">firstval(time)</include>
+                    <include field="last_time">lastval(time)</include>
+                    <include field="n">count()</include>
+                </expressions>
+            </target-list>
+            <param name="group-by-name.0" value="stock"/>
+            <param name="group-by.0" value="Symbol"/>
+            <param name="gui:x" value="562"/>
+            <param name="gui:y" value="151"/>
+        </box>
+        <output-stream name="AvgOut">
+            <param name="gui:x" value="685"/>
+            <param name="gui:y" value="151"/>
+        </output-stream>
+    </add>
+</modify>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbfs:Simulation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:sbfs="http://www.streambase.com/schemas/feedsim/02/SBFS" Description="comma-separated value (csv) data file contains user IDs and IP addresses">
+  <SimStreams Name="IPandUserLogin">
+    <ProcessingOptions TimeStampColumn="1" DataGenerationMethod="DataFile" DataGenRateMethod="TimestampFromColumn">
+      <DataSource Name="Split-IPandUserLogin.csv" DataSourceURI="Split-IPandUserLogin.csv" TimestampFormat="ss.SSS"/>
+    </ProcessingOptions>
+    <Schema>
+      <Fields Name="UserID" DataTypeName="int" FieldLength="4">
+        <DataSourceMapping DestFieldNum="2"/>
+      </Fields>
+      <Fields Name="IP" DataTypeName="string" FieldLength="16">
+        <DataSourceMapping DestFieldNum="3"/>
+      </Fields>
+      <Fields Name="LoginTime" DataTypeName="timestamp" FieldLength="8">
+        <DataSourceMapping DestFieldNum="4"/>
+      </Fields>
+    </Schema>
+  </SimStreams>
+</sbfs:Simulation>

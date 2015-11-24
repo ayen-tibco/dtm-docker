@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <named-schemas>
+            <schema name="TradeSchema">
+                <field name="Symbol" type="string"/>
+                <field name="PricePerShare" type="double"/>
+            </schema>
+        </named-schemas>
+        <stream name="TradesIn" schema="TradeSchema">
+            <param name="gui:x" value="41"/>
+            <param name="gui:y" value="-71"/>
+        </stream>
+        <stream name="TradesIn2" schema="TradeSchema">
+            <param name="gui:x" value="41"/>
+            <param name="gui:y" value="28"/>
+        </stream>
+        <box name="AggregateSeq" type="aggregate">
+            <input port="1" stream="TradesIn2"/>
+            <output port="1" stream="SeqOut"/>
+            <param name="dimension-name.0" value="AggregateSeqDim"/>
+            <param name="dimension-type.0" value="tuple"/>
+            <param name="dimension-emit.0" value="1"/>
+            <param name="dimension-partial.0" value="no"/>
+            <param name="dimension-emit-close-first.0" value="false"/>
+            <param name="output-group-by" value="true"/>
+            <target-list>
+                <expressions>
+                    <include field="sequence_num">count()</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="138"/>
+            <param name="gui:y" value="28"/>
+        </box>
+        <box name="AggregateTrades" type="aggregate">
+            <input port="1" stream="TradesIn"/>
+            <output port="1" stream="AvgPricePSOut"/>
+            <param name="dimension-name.0" value="AggregateTradesDim"/>
+            <param name="dimension-type.0" value="tuple"/>
+            <param name="dimension-offset.0" value="0"/>
+            <param name="dimension-advance.0" value="1"/>
+            <param name="dimension-partial.0" value="no"/>
+            <param name="dimension-size.0" value="4"/>
+            <param name="dimension-emit-close-first.0" value="false"/>
+            <param name="output-group-by" value="true"/>
+            <target-list>
+                <expressions>
+                    <include field="MovingAverage">avg(PricePerShare)</include>
+                </expressions>
+            </target-list>
+            <param name="group-by-name.0" value="Symbol"/>
+            <param name="group-by.0" value="Symbol"/>
+            <param name="gui:x" value="138"/>
+            <param name="gui:y" value="-71"/>
+        </box>
+        <output-stream name="AvgPricePSOut">
+            <param name="gui:x" value="255"/>
+            <param name="gui:y" value="-71"/>
+        </output-stream>
+        <output-stream name="SeqOut">
+            <param name="gui:x" value="255"/>
+            <param name="gui:y" value="28"/>
+        </output-stream>
+    </add>
+</modify>

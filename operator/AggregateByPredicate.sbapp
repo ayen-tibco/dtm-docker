@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <gui.metadata>
+            <property name="description" value="A toy demonstration app for predicate based windows, which enables fine grained control over windows including:&#10; - opening multiple overlapping windows&#10; - emitting partial results&#10; - ignoring data (having no open windows)&#10;&#10;Simply enqueue window commands to the &quot;WindowControl&quot; stream and data to aggregate to the &quot;TradesIn&quot; stream."/>
+        </gui.metadata>
+        <stream name="TradesIn">
+            <schema>
+                <field name="Volume" type="int"/>
+                <field name="Price" type="double"/>
+            </schema>
+            <param name="gui:x" value="157"/>
+            <param name="gui:y" value="73"/>
+        </stream>
+        <stream name="WindowControl">
+            <property name="description" value="Allows fine grained control over the aggregates window, including the ability to keep multiple overlapping windows, emit partial results, and have no active window (ignoring data)."/>
+            <schema>
+                <field name="OpenWindow" type="bool"/>
+                <field name="EmitWindow" type="bool"/>
+                <field name="CloseWindow" type="bool"/>
+            </schema>
+            <param name="gui:x" value="157"/>
+            <param name="gui:y" value="-26"/>
+        </stream>
+        <box name="Union1" type="union">
+            <input port="1" stream="WindowControl"/>
+            <input port="2" stream="TradesIn"/>
+            <output port="1" stream="out:Union1_1"/>
+            <param name="strict" value="false"/>
+            <param name="gui:x" value="284"/>
+            <param name="gui:y" value="23"/>
+            <param name="gui:bends:1" value="242,4;250,43"/>
+            <param name="gui:bends:2" value="254,103;264,63"/>
+        </box>
+        <box name="AggregateTrades" type="aggregate">
+            <input port="1" stream="out:Union1_1"/>
+            <output port="1" stream="OutputChunkedTrades"/>
+            <param name="dimension-name.0" value="AggregateTradesDim"/>
+            <param name="dimension-type.0" value="predicate"/>
+            <param name="dimension-partial.0" value="no"/>
+            <param name="dimension-open-predicate.0" value="input1.OpenWindow"/>
+            <param name="dimension-close-predicate.0" value="input1.CloseWindow"/>
+            <param name="dimension-emit-predicate.0" value="input1.EmitWindow || input1.CloseWindow"/>
+            <param name="dimension-emit-close-first.0" value="false"/>
+            <param name="output-group-by" value="true"/>
+            <target-list>
+                <expressions>
+                    <include field="StartTime">firstval(now())</include>
+                    <include field="EndTime">lastval(now())</include>
+                    <include field="TotalVolume">sum(Volume)</include>
+                    <include field="VWAP">vwap(Price, Volume)</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="381"/>
+            <param name="gui:y" value="23"/>
+        </box>
+        <output-stream name="OutputChunkedTrades">
+            <param name="gui:x" value="522"/>
+            <param name="gui:y" value="23"/>
+        </output-stream>
+    </add>
+</modify>

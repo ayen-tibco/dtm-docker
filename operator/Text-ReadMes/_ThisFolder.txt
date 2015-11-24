@@ -1,0 +1,4 @@
+
+This folder contains text-only versions of the HTML README files in the 
+folder above. Use these files if you are logged in with a character-mode
+terminal session and have no access to an HTML browser.

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <parameter-definitions>
+            <parameter default="&quot;xxx&quot;" name="path"/>
+        </parameter-definitions>
+        <stream name="Input">
+            <schema>
+                <field description="module to receive data" name="value" type="int"/>
+                <field name="action" type="string"/>
+            </schema>
+            <param name="gui:x" value="-211"/>
+            <param name="gui:y" value="151"/>
+        </stream>
+        <box name="DispatchStyle" type="filter">
+            <input port="1" stream="Input"/>
+            <output port="1" stream="out:DispatchStyle_1"/>
+            <output port="2" stream="out:DispatchStyle_2"/>
+            <param name="autogen-nomatch-port" value="true"/>
+            <param name="expression.0" value="notnull(action)"/>
+            <param name="expression.1" value="true"/>
+            <param name="gui:x" value="127"/>
+            <param name="gui:y" value="151"/>
+        </box>
+        <box name="BroadcastDispatch" type="map">
+            <input port="1" stream="out:DispatchStyle_2"/>
+            <output port="1" stream="out:BroadcastDispatch_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="path">list("Entering port 2 for Broadcast dispatch")</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="363"/>
+            <param name="gui:y" value="161"/>
+        </box>
+        <box name="NameDispatch" type="map">
+            <input port="1" stream="out:DispatchStyle_1"/>
+            <output port="1" stream="out:NameDispatch_1"/>
+            <target-list>
+                <item name="input" selection="all"/>
+                <expressions>
+                    <include field="path">list("Entering port 1 for Name dispatch")</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="363"/>
+            <param name="gui:y" value="62"/>
+            <param name="gui:bends:1" value="329,171;347,92"/>
+        </box>
+        <extension-point extension-point-id="extpt.deployment.multiplier" externally-defined="true" name="Multiply">
+            <input dispatch="name" key="lower(action)" name="InputStream1" port="1" stream="out:NameDispatch_1"/>
+            <input dispatch="broadcast" name="InputStream2" port="2" stream="out:BroadcastDispatch_1"/>
+            <output name="OutputStream" port="1" stream="Output"/>
+            <error stream="Error"/>
+            <multiplicity type="interface"/>
+            <param name="file" value="Multiplier.sbint"/>
+            <param name="gui:x" value="492"/>
+            <param name="gui:y" value="94"/>
+            <param name="gui:bends:1" value="460,92;464,114"/>
+            <param name="gui:bends:2" value="468,191;482,134"/>
+        </extension-point>
+        <output-stream name="Error">
+            <param name="gui:x" value="611"/>
+            <param name="gui:y" value="121"/>
+            <param name="gui:bends:1" value="567,134;571,151"/>
+        </output-stream>
+        <output-stream name="Output">
+            <param name="gui:x" value="611"/>
+            <param name="gui:y" value="22"/>
+            <param name="gui:bends:1" value="575,114;589,52"/>
+        </output-stream>
+        <gui.note name="Note">
+            <property name="description" value="This sample is a variation on ExtensionPoint.sbapp. In Multiplier.sbint, it specifies externally defined modules. Two example deployment files are provided to specify the modules to run, ExtPtDeployment1.sbdeploy and ExtPtDeployment2.sbdeploy."/>
+            <param name="gui:x" value="-212"/>
+            <param name="gui:y" value="-58"/>
+            <param name="gui:width" value="340"/>
+            <param name="gui:height" value="153"/>
+        </gui.note>
+        <gui.note name="NoteCopy">
+            <property name="description" value="IMPORTANT!&#13;&#10;&#13;&#10;To run this sample, do not run this .sbapp file. Instead, select ExtPtDeployment1.sbdeploy in the Package Explorer, right-click and select Run As &gt; StreamBase Application. &#13;&#10;&#13;&#10;You can also run the second deployment file example, ExtPtDeployment2.sbdeploy."/>
+            <param name="gui:x" value="-211"/>
+            <param name="gui:y" value="250"/>
+            <param name="gui:width" value="339"/>
+            <param name="gui:height" value="219"/>
+        </gui.note>
+    </add>
+</modify>

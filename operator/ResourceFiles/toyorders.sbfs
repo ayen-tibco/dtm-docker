@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbfs:Simulation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:sbfs="http://www.streambase.com/schemas/feedsim/02/SBFS" Description="">
+  <SimStreams Name="Orders">
+    <ProcessingOptions DataRatePerSecond="1.0" DataGenerationMethod="DataFile">
+      <DataSource Name="toys.csv" DataSourceURI="toys.csv"/>
+    </ProcessingOptions>
+    <Schema>
+      <Fields Name="Category" DataTypeName="string" FieldLength="32">
+        <DataSourceMapping/>
+      </Fields>
+      <Fields Name="Item" DataTypeName="string" FieldLength="32">
+        <DataSourceMapping DestFieldNum="2"/>
+      </Fields>
+      <Fields Name="Quantity" DataTypeName="int" FieldLength="4">
+        <DataSourceMapping DestFieldNum="3"/>
+      </Fields>
+    </Schema>
+  </SimStreams>
+</sbfs:Simulation>

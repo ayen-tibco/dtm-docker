@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modify version="7.4.0">
+    <add>
+        <stream name="StockIn">
+            <schema>
+                <field name="Symbol" type="string"/>
+                <field name="Name" type="string"/>
+                <field name="Volume" type="int"/>
+                <field name="Price" type="double"/>
+            </schema>
+            <param name="gui:x" value="-44"/>
+            <param name="gui:y" value="24"/>
+        </stream>
+        <box name="AggregateList" type="aggregate">
+            <input port="1" stream="StockIn"/>
+            <output port="1" stream="out:AggregateList_1"/>
+            <param name="dimension-name.0" value="list"/>
+            <param name="dimension-type.0" value="tuple"/>
+            <param name="dimension-advance.0" value="3"/>
+            <param name="dimension-partial.0" value="no"/>
+            <param name="dimension-size.0" value="3"/>
+            <param name="dimension-emit-close-first.0" value="false"/>
+            <param name="output-group-by" value="true"/>
+            <target-list>
+                <expressions>
+                    <include field="list">aggregatelist(tuple(Symbol, Name, Volume, Price))</include>
+                    <include field="input_*">firstval(*)</include>
+                </expressions>
+            </target-list>
+            <param name="group-by-name.0" value="symbol"/>
+            <param name="group-by.0" value="Symbol"/>
+            <param name="gui:x" value="42"/>
+            <param name="gui:y" value="24"/>
+        </box>
+        <box name="IterateOverList" type="iterate">
+            <input port="1" stream="out:AggregateList_1"/>
+            <output port="1" stream="StockOut"/>
+            <param name="iterate-expr" value="list"/>
+            <param name="iterate-cond" value="sum(each.element.Volume) &lt; 15000"/>
+            <param name="iterate-where" value="each.element.Volume*each.element.Price &gt; 5000"/>
+            <target-list>
+                <item name="input" selection="none"/>
+                <expressions>
+                    <include field="StockName">each.element.Name</include>
+                    <include field="StockSymbol">each.element.Symbol</include>
+                    <include field="StockCost">each.element.Volume*each.element.Price</include>
+                </expressions>
+            </target-list>
+            <param name="gui:x" value="147"/>
+            <param name="gui:y" value="24"/>
+        </box>
+        <output-stream name="StockOut">
+            <param name="gui:x" value="245"/>
+            <param name="gui:y" value="24"/>
+        </output-stream>
+    </add>
+</modify>
